@@ -1,0 +1,108 @@
+
+.bg-image {
+    background-image: url("../imgs/umu\ .png");
+    background-repeat: no-repeat;
+    background-size: 40rem 50rem;
+    
+}
+
+.nav {
+    background-color: white;
+    margin-left: 2rem;
+    position: fixed; 
+    margin-top: 2rem; 
+    margin-bottom: 4px; 
+    padding-left: 10px;  
+    padding-right: 10px;  
+    border-radius: 10px; 
+    width: 95%; 
+  }
+  
+body{
+    background-color: #cfc2b0;
+}
+
+.div1{
+    padding-left: 20rem;
+    padding-right: 10rem;
+}
+.photo{
+    background-image: url("../imgs/umugongo.jpeg");
+    background-size: center;
+    background-repeat: no-repeat;
+    height: 70rem;
+    width: 1054px;
+    opacity:0.5;
+}
+.colo{
+    color: #4C747A;
+}
+.tab{
+    
+    margin-left: 5rem;
+}
+/*  */
+.div2{
+    background-color: #4C747A;
+    border-radius: 8px;
+    
+}
+.div3{
+    transform: translateY(-52PX);
+    background-color: white;
+
+}
+.logi{
+    display: flex;
+}
+.testimony{
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    background-color: #4C747A;
+}
+.adel{
+    transform: translate(185%, -50px);
+    position: absolute;
+    
+}
+.phone{
+    width: 45%;
+}
+.btn{
+    background-color: #4C747A;
+    color: white;
+}
+.book{
+    background: rgba(217, 217, 217, 0.2);
+}
+.footer{
+    background-color: #4C747A;
+    padding: 4rem;
+}
+
+.wrap-but-inpt {
+border-radius: 10px;
+width: max-content;
+}
+.schedule{
+    display: flex;
+    flex-direction: row;
+}
+.my-holder {
+    margin-top: -40px;
+}
+.div-cont{
+    display: flex;
+    
+}
+.copy{
+    color: white;
+    margin-left: 57%;
+}
+.twiter{
+    display: flex;
+    /* flex-wrap: nowrap; */
+    border: 1px solid red;
+
+}
