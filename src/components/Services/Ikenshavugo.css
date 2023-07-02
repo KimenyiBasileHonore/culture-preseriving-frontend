@@ -1,0 +1,101 @@
+.card {
+    width: 300px;
+    height: 200px;
+    margin: 20px;
+    border-radius: 4px;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  }
+  
+  .front-card {
+    background: rgb(238, 230, 230);
+    justify-content: center;
+    color: black;
+  }
+  
+  .back-card {
+    background: rgb(37, 37, 151);
+    justify-content: center;
+    color: white;
+  }
+  
+  .flip-button {
+    margin-top: 4rem;
+    width: 150px;
+    padding: 10px;
+    background: grey;
+    font-weight: bold;
+    border-radius: 5px;
+  }
+  
+  .marg{
+    margin-left: 8rem;
+  }
+
+  .front{
+    font-size: 20px;
+    background-color:rgb(37, 37, 151);
+    color: white;
+  }
+
+  .backoo{
+    font-size: 20px;
+    background-color: white;
+    color: blue;
+  }
+  .btn{
+    margin-top: 2rem;
+    color: black;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  background-color:  #f2f2f2;
+}
+
+.header-content:hover {
+  background-color: #e6e6e6;
+}
+
+.arrow {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  position: relative;
+  cursor: pointer;
+}
+
+.arrow::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  border-bottom: 2px solid black;
+  border-right: 2px solid black;
+}
+
+.collapsible.open .arrow::before {
+  transform: translate(-50%, -50%) rotate(-135deg);
+}
+
+.section-heading {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Times New Roman', Times, serif;
+}

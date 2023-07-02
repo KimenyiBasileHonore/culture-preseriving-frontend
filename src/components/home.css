@@ -2,37 +2,55 @@
 .bg-image {
     background-image: url("../imgs/umu\ .png");
     background-repeat: no-repeat;
-    background-size: 40rem 50rem;
+    background-size: cover;
+    
     
 }
+.mar{
+    margin-top: 23rem;
+    margin-left: 24rem;
+    
+}
+.center-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 23rem;
+    margin-left: 3rem;
+  }
+  
+
 
 .nav {
     background-color: white;
-    margin-left: 2rem;
-    position: fixed; 
-    margin-top: 2rem; 
+    margin-left: 2rem; 
     margin-bottom: 4px; 
     padding-left: 10px;  
     padding-right: 10px;  
     border-radius: 10px; 
     width: 95%; 
   }
+  .tim{
+    margin-left: 20rem;
+  }
   
 body{
-    background-color: #cfc2b0;
+    background-color: white
 }
 
 .div1{
     padding-left: 20rem;
     padding-right: 10rem;
 }
-.photo{
-    background-image: url("../imgs/umugongo.jpeg");
-    background-size: center;
-    background-repeat: no-repeat;
-    height: 70rem;
-    width: 1054px;
-    opacity:0.5;
+.nyambo{
+    margin-left:70px;
+    height: 500px;
+    margin-bottom: 20px;
+    width: 400px;
+
 }
 .colo{
     color: #4C747A;
@@ -70,14 +88,14 @@ body{
     width: 45%;
 }
 .btn{
-    background-color: #4C747A;
+    background-color: black;
     color: white;
 }
 .book{
     background: rgba(217, 217, 217, 0.2);
 }
 .footer{
-    background-color: #4C747A;
+    background-color: rgb(44, 37, 37);
     padding: 4rem;
 }
 
@@ -104,5 +122,13 @@ width: max-content;
     display: flex;
     /* flex-wrap: nowrap; */
     border: 1px solid red;
+
+}
+
+.museu{
+    background-image: url("../imgs/museum.jpeg");
+    background-size:contain;
+    height: 40rem;
+   
 
 }

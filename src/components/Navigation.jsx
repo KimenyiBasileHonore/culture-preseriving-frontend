@@ -2,12 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../imgs/logo.png";
 import rwanda from "../imgs/rwanda.ico";
-import "./home.css";
+import "./Home.css";
 
 export default function Navigation() {
   return (
     <div>
-      <nav className="fixed mt-8 mb-4 px-10 nav rounded">
+      <nav className="mb-4 px-10 nav rounded">
         <div className="text-brown">
           <div className="px-0.5 pt-0.5 lg:px-8">
             <nav className="flex items-center">
@@ -17,7 +17,7 @@ export default function Navigation() {
                   className="w-10 float-left ml-16 rounded-lg"
                   alt=""
                 />
-                <span className="text-brown mt-3 font-bold">RCHA</span>
+                <span className="text-brown mt-3 font-bold">RCP</span>
               </div>
               <div className="hidden lg:flex lg:gap-x-12 font-bold">
                 <Link to="Home" className="text-base text-brown font-bold hover:bg-cyan-950 hover:text-white">
@@ -32,8 +32,8 @@ export default function Navigation() {
               </div>
               <div className="flex lg:flex lg:flex-1 lg:justify-end font-bold mr-10">
                 <Link
-                  to="Register"
-                  className="text-base text-white bg-blue-500 hover:bg-cyan-950 hover:text-white rounded py-1 px-2 rounded"
+                  to="Signup"
+                  className="w-32 text-white font-medium rounded-full text-sm px-6 py-2.5 text-center bg-blue-900 hover:bg-cyan-950 hover:text-white rounded py-1 px-2 rounded"
                 >
                   Register
                 </Link>

@@ -1,0 +1,25 @@
+.colo{
+    color: black;
+}
+.signup{
+    background-color: white;
+}
+.c1{
+    /* border: 1px solid red; */
+    width: 75%;
+    height: 50%;
+}
+.prs{
+ position: absolute;
+width: 600px;
+height: 350px;
+left: 640px;
+top: 150px;
+}
+
+
+.back{
+    background-image: url("../../imgs/nyanza.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
