@@ -90,6 +90,12 @@ body{
 .btn{
     background-color: black;
     color: white;
+    
+}
+.btno{
+    background-color: black;
+    color: white;
+    
 }
 .book{
     background: rgba(217, 217, 217, 0.2);

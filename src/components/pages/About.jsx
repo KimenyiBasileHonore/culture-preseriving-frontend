@@ -27,8 +27,8 @@ export default function About() {
 
 
                 </p>
-                <Link to="about">
-                    <button class="text-center border-2 w-32 h-10 rounded-lg text-sm mt-10 font-semibold btn">More</button>
+                <Link to="/About">
+                    <button class="text-center  border-2 w-32 h-10 rounded-lg text-sm mt-10 font-semibold btno">More</button>
                 </Link>
 
             </div>

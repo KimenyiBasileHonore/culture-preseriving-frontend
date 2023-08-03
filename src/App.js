@@ -7,14 +7,18 @@ import Homepage from './components/pages/Homepage';
 import Contact from './components/pages/Contact';
 import Dashboard from './components/pages/Dashboard';
 import Navigation from './components/Navigation';
+import Admdash from './components/pages/Admdash';
+import ForgotPassword from './components/Login/ForgotPassword';
+import ResetPassword from './components/Login/ResetPassword';
 import './App.css';
+
 
 
 
 function App() {
 
   const location = useLocation();
-  const hideNavigationAndFooter = location.pathname === '/Dashboard'
+  const hideNavigationAndFooter = location.pathname === '/Dashboard' || location.pathname === '/Admdash';
  
   
 
@@ -31,8 +35,10 @@ function App() {
       <Route path ="/Footer" element ={<Footer/>}/>
       <Route path="/Contact" element ={<Contact/>}/>
       <Route path="/Dashboard" element ={<Dashboard/>}/>
-      
-      
+      <Route path="/Admdash" element ={<Admdash/>}/>
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
+
       
       
       </Routes>

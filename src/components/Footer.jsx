@@ -84,7 +84,7 @@ import "./Home.css";
                     clas="email-input outline-none"
                     placeholder="enter your email"
                     required/>
-                    <button class="btn p-2 lounded-lg">Subscribe</button>
+                    <button class="btno  p-2 lounded-lg">Subscribe</button>
                 </div>
                 <p class="copy"> Copyright RCHA@2023</p>
                 
