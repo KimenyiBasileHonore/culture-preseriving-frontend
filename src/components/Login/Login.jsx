@@ -26,7 +26,7 @@ export default function Login() {
 
     try {
       // Send a POST request to the login API endpoint
-      const response = await axios.post("/login", userCredentials);
+      const response = await axios.post("http://localhost:4050/api/user/login", userCredentials);
 
       // Handle the successful login response
       console.log(response.data); // The response will contain the JWT token and other data
@@ -91,12 +91,12 @@ export default function Login() {
                     required=""
                   />
                 </div>
-                <div class="flex justify-center align-baseline mt-3 mb-3">
+                {/* <div class="flex justify-center align-baseline mt-3 mb-3">
                   <label
                     For="setone"
                     class="font-light text-sm colo w-full flex "
                   >
-                    {/* <hr class="border mt-3 mr-3 border-gray-200 w-20" /> Forgot Your Password?{" "} */}
+      
                     <button
                       type="button"
                       onClick={handleForgotPassword}
@@ -104,9 +104,7 @@ export default function Login() {
                     >
                       Forgot Password
                     </button>
-                    {/* <Link to="" class="text-base hover:bg-cyan-600 ml-1 font-bold hover:underline">
-                      SetOne
-                    </Link> */}
+                    
                     <button
                       type="button"
                       onClick={handleResetPassword}
@@ -117,14 +115,14 @@ export default function Login() {
                     <hr class="border mt-3 ml-3 border-gray-200 w-20" />
                   </label>
                   <hr />
-                </div>
+                </div> */}
                 <div class="flex gap-5">
                   <Link to="/Signup">
                     <button
                       type="submit"
                       class="w-32 text-blue-900 ml-7 hover:bg-cyan-950 font-medium rounded-full text-sm px-6 border-2 border-blue-900 py-2.5 text-center bg-white "
                     >
-                      Sign up
+                      Sign Up
                     </button>
                   </Link>
                   <button
@@ -134,7 +132,7 @@ export default function Login() {
                     Log In
                   </button>
                 </div>
-                <div class="flex px-6 mt-3 mb-3">
+                {/* <div class="flex px-6 mt-3 mb-3">
                   <label
                     For="setone"
                     class="font-light text-base colo w-full text-center flex "
@@ -142,8 +140,8 @@ export default function Login() {
                     <hr class="border mt-3 mr-3 border-gray-200 w-32" /> Or
                     <hr class="border mt-3 ml-3 border-gray-200 w-32" />
                   </label>
-                </div>
-                <div class="flex gap-3  mb-6">
+                </div> */}
+                {/* <div class="flex gap-3  mb-6">
                   <Link to="https://en-gb.facebook.com/">
                     <button
                       type=""
@@ -162,7 +160,7 @@ export default function Login() {
                     </button>
                   </Link>
 
-                </div>
+                </div> */}
               </form>
             </div>
 

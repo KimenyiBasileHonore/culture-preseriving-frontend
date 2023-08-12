@@ -148,7 +148,9 @@ useEffect(() => {
         <div className="flex-grow"></div>
 
         <div className="p-4 mt-44 ml-4">
-          <button className="bg-blue-900 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded">
+          <button className="bg-blue-900 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded"
+          // onClick={handleLogout}
+          >
             Log Out
           </button>
         </div>

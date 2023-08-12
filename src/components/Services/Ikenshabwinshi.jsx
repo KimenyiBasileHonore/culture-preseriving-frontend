@@ -1,51 +1,57 @@
 import React, { useState, useEffect } from "react";
 import ReactCardFlip from "react-card-flip";
-import "./Ikenshavugo.css";
-import axios from "axios";
+import "./Ikenshavugo.css"; // Import the CSS file
 
-function Ikenshabwinshi() {
+function Ikenshkumwami() {
   const [isOpen, setIsOpen] = useState(false);
-  const [ubwinshiData, setUbwinshiData] = useState([]);
   const [flips, setFlips] = useState([]);
+  const [currentFlipIndex, setCurrentFlipIndex] = useState(-1);
+  const [umwamiList, setUmwamiList] = useState([]);
 
   const toggleCollapsible = () => {
     setIsOpen(!isOpen);
   };
 
   const handleFlip = (index) => {
-    const newFlips = flips.map((flip, i) => (i === index ? !flip : false));
+    const newFlips = [...flips];
+    newFlips[index] = !newFlips[index];
+
+    if (currentFlipIndex !== -1 && currentFlipIndex !== index) {
+      newFlips[currentFlipIndex] = false;
+    }
+
     setFlips(newFlips);
+    setCurrentFlipIndex(index);
+  };
+
+  const fetchUmwamiList = async () => {
+    try {
+      const response = await fetch("http://localhost:4050/api/ubwinshi/ubwinshi"); // Use the correct backend API URL here
+      const data = await response.json();
+      setUmwamiList(data);
+      setFlips(Array(data.length).fill(false));
+    } catch (error) {
+      console.error("Error fetching umwami list:", error);
+    }
   };
 
   useEffect(() => {
-    const fetchUbwinshiData = async () => {
-      try {
-        const response = await axios.get("/api/ubwinshi"); // Replace with your backend API URL
-        setUbwinshiData(response.data);
-        setFlips(Array(response.data.length).fill(false));
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchUbwinshiData();
+    fetchUmwamiList();
   }, []);
 
   return (
-    <div>
-      <div className={`collapsible ${isOpen ? "open" : ""}`}>
+    <div className="mt-16">
+      <div className={`collapsible ${isOpen ? 'open' : ''}`}>
         <div className="collapsible-header" onClick={toggleCollapsible}>
           <div className="header-content">
-            <h1 class="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">
-              Ubwinshi bw’abantu n’ibintu
-            </h1>
-            <span className={`arrow ${isOpen ? "up" : "down"}`}></span>
+            <h1 class="title-font sm:text-2xl   text-xl font-medium text-gray-900 mb-3">Ubwinshi bw’abantu n’ibintu</h1>
+            <span className={`arrow ${isOpen ? 'up' : 'down'}`}></span>
           </div>
         </div>
-        <hr />
-        <br />
+        <hr /><br /> 
         {isOpen && (
           <div className="marg flex flex-wrap collapsible-content -m-4">
-            {ubwinshiData.map((ubwinshi, index) => (
+            {umwamiList.map((item, index) => (
               <ReactCardFlip
                 key={index}
                 className="p-4 lg:w-1/4"
@@ -53,10 +59,9 @@ function Ikenshabwinshi() {
                 flipDirection="vertical"
               >
                 <div className="card front-card">
-                  <h1 className="front">Ntibavuga</h1>
-                  <br />
-                  <br />
-                  {ubwinshi.frontContent}
+                  <h1 className="front">{item.title}</h1>
+                  <br /><br />
+                  {item.summary}
                   <br />
                   <button className="flip-button" onClick={() => handleFlip(index)}>
                     Bavuga
@@ -64,9 +69,8 @@ function Ikenshabwinshi() {
                 </div>
                 <div className="card back-card">
                   <h1 className="backoo">Bavuga</h1>
-                  <br />
-                  <br />
-                  {ubwinshi.backContent}
+                  <br /><br />
+                  {item.details}
                   <br />
                   <button className="flip-button" onClick={() => handleFlip(index)}>
                     Ntibavuga
@@ -81,8 +85,7 @@ function Ikenshabwinshi() {
   );
 }
 
-export default Ikenshabwinshi;
-
+export default Ikenshkumwami;
 
 
 

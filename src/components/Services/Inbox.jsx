@@ -14,7 +14,7 @@ export default function Inbox() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("/all"); // Use the appropriate route to fetch all users
+      const response = await axios.get("http://localhost:4050/api/user/all"); // Use the appropriate route to fetch all users
       setUsers(response.data.data);
     } catch (error) {
       console.error(error);

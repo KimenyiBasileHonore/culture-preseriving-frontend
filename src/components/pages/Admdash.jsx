@@ -4,6 +4,11 @@ import logo from "../../imgs/logo.png";
 import Maindashboard from "../Services/Maindashboard";
 import Inbox from "../Services/Inbox";
 import Feedback from "../Services/Feedback";
+import Ibisakuzooo from "../Admin/Ibisakuzooo";
+import Ikenshavugooo from "../Admin/Ikenshavugooo";
+import Imiganiii from "../Admin/Imiganiii";
+import Incamarengaaa from "../Admin/Incamarengaaa";
+import Isomerooo from "../Admin/Isomerooo";
 
 export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -33,7 +38,7 @@ export default function Dashboard() {
       });
     }
   };
-  
+
 
   return (
     <div className="flex h-screen">
@@ -66,24 +71,54 @@ export default function Dashboard() {
             Dashboard
           </li>
           <li
-            className={`py-2 px-6 text-white hover:bg-gray-300 cursor-pointer ${selectedItem === "Imigani migufi" ? "bg-gray-300" : ""}`}
+            className={`py-2 px-6 text-white hover:bg-gray-300 cursor-pointer ${selectedItem === "Inbox" ? "bg-gray-300" : ""}`}
             onClick={() => handleItemClick("Inbox")}
           >
             Inbox
           </li>
           <li
-            className={`py-2 px-6 text-white hover:bg-gray-300 cursor-pointer ${selectedItem === "Ikenshavugo" ? "bg-gray-300" : ""}`}
+            className={`py-2 px-6 text-white hover:bg-gray-300 cursor-pointer ${selectedItem === "Feedback" ? "bg-gray-300" : ""}`}
             onClick={() => handleItemClick("Feedback")}
           >
             Feedback
           </li>
-         
-          
+          <li
+            className={`py-2 px-6 text-white hover:bg-gray-300 cursor-pointer ${selectedItem === "Imigani migufi" ? "bg-gray-300" : ""}`}
+            onClick={() => handleItemClick("Imigani migufi")}
+          >
+            Imigani migufi
+          </li>
+          <li
+            className={`py-2 px-6 text-white hover:bg-gray-300 cursor-pointer ${selectedItem === "Ikenshavugo" ? "bg-gray-300" : ""}`}
+            onClick={() => handleItemClick("Ikenshavugo")}
+          >
+            Ikenshavugo
+          </li>
+          <li
+            className={`py-2 px-6 text-white hover:bg-gray-300 cursor-pointer ${selectedItem === "Incamarenga" ? "bg-gray-300" : ""}`}
+            onClick={() => handleItemClick("Incamarenga")}
+          >
+            Incamarenga
+          </li>
+          <li
+            className={`py-2 px-6 text-white hover:bg-gray-300 cursor-pointer ${selectedItem === "Ibisakuzo" ? "bg-gray-300" : ""}`}
+            onClick={() => handleItemClick("Ibisakuzo")}
+          >
+            Ibisakuzo
+          </li>
+          <li
+            className={`py-2 px-6 text-white hover:bg-gray-300 cursor-pointer ${selectedItem === "Isomero" ? " bg-gray-300" : ""}`}
+            onClick={() => handleItemClick("Isomero")}
+          >
+            Isomero
+          </li>
+
+
         </ul>
         {/* Rest of the sidebar content */}
         <div className="flex-grow"></div>
 
-        <div className="p-4 mt-44 ml-4">
+        <div className="p-4  ml-4">
           <button className="bg-blue-900 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded">
             Log Out
           </button>
@@ -101,7 +136,7 @@ export default function Dashboard() {
             <section className="text-gray-600 body-font">
               <div className="container px-5 py-24 mx-auto">
                 <div className="flex flex-wrap -m-4">
-                  <Maindashboard/>
+                  <Maindashboard />
                 </div>
               </div>
             </section>
@@ -110,8 +145,8 @@ export default function Dashboard() {
             <section className="text-gray-600 body-font">
               <div className="container px-5 py-24 mx-auto">
                 <div className="flex flex-wrap -m-4">
-                <Inbox/>
-                 
+                  <Inbox />
+
                 </div>
               </div>
             </section>
@@ -119,15 +154,66 @@ export default function Dashboard() {
           {selectedItem === "Feedback" && (
             <section className="text-gray-600  body-font">
               <div className="container px-5 py-24 mx-auto">
-                <div className="flex flex-wrap -m-4"> 
-                <Feedback/>
-                
+                <div className="flex flex-wrap -m-4">
+                  <Feedback />
+
                 </div>
               </div>
             </section>
           )}
-          
-        
+
+          {selectedItem === "Imigani migufi" && (
+            <section className="text-gray-600 body-font">
+              <div className="container px-5 py-24 mx-auto">
+                <div className="flex flex-wrap -m-4">
+                  <Imiganiii />
+
+                </div>
+              </div>
+            </section>
+          )}
+          {selectedItem === "Ikenshavugo" && (
+            <section className="text-gray-600  body-font">
+              <div className="container px-5 py-24 mx-auto">
+                <div className="flex flex-wrap -m-4">
+                  <Ikenshavugooo />
+
+                </div>
+              </div>
+            </section>
+          )}
+          {selectedItem === "Incamarenga" && (
+            <section className="text-gray-600 body-font">
+              <div className="container px-5 py-24 mx-auto">
+                <div className="flex flex-wrap -m-4">
+                  <Incamarengaaa />
+
+                </div>
+              </div>
+            </section>
+          )}
+          {selectedItem === "Ibisakuzo" && (
+            <section className="text-gray-600 body-font">
+              <div className="container px-5 py-24 mx-auto">
+                <div className="flex flex-wrap -m-4">
+                  <Ibisakuzooo />
+
+                </div>
+              </div>
+            </section>
+          )}
+          {selectedItem === "Isomero" && (
+            <section className="text-gray-600 body-font">
+              <div className="container px-5 py-24 mx-auto">
+                <div className="flex flex-wrap -m-4">
+                  <Isomerooo />
+
+                </div>
+              </div>
+            </section>
+          )}
+
+
         </div>
       </div>
     </div>

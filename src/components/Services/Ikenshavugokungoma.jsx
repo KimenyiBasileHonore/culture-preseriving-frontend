@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ReactCardFlip from "react-card-flip";
-import "./Ikenshavugo.css";
+import "./Ikenshavugo.css"; // Import the CSS file
 
-function Ikenshavugokungoma() {
+function Ikenshkumwami() {
   const [isOpen, setIsOpen] = useState(false);
-  const [flips, setFlips] = useState([false, false, false, false]);
+  const [flips, setFlips] = useState([]);
   const [currentFlipIndex, setCurrentFlipIndex] = useState(-1);
-  const [kungomaList, setKungomaList] = useState([]);
+  const [umwamiList, setUmwamiList] = useState([]);
 
   const toggleCollapsible = () => {
     setIsOpen(!isOpen);
@@ -24,33 +24,34 @@ function Ikenshavugokungoma() {
     setCurrentFlipIndex(index);
   };
 
-  const fetchKungomaList = async () => {
+  const fetchUmwamiList = async () => {
     try {
-      const response = await fetch("/api/kungoma"); // Use the correct backend API URL here
+      const response = await fetch("http://localhost:4050/api/kungoma/kungoma"); // Use the correct backend API URL here
       const data = await response.json();
-      setKungomaList(data);
+      setUmwamiList(data);
+      setFlips(Array(data.length).fill(false));
     } catch (error) {
-      console.error("Error fetching kungoma list:", error);
+      console.error("Error fetching umwami list:", error);
     }
   };
 
   useEffect(() => {
-    fetchKungomaList();
+    fetchUmwamiList();
   }, []);
 
   return (
-    <div>
+    <div className="">
       <div className={`collapsible ${isOpen ? 'open' : ''}`}>
         <div className="collapsible-header" onClick={toggleCollapsible}>
           <div className="header-content">
-            <h1 class="title-font sm:text-2xl  text-xl font-medium text-gray-900 mb-3">Ku bijyanye n’ingoma</h1>
+            <h1 class="title-font sm:text-2xl   text-xl font-medium text-gray-900 mb-3">Ku bijyanye n’ingoma</h1>
             <span className={`arrow ${isOpen ? 'up' : 'down'}`}></span>
           </div>
         </div>
         <hr /><br /> 
         {isOpen && (
-          <div className="marg flex flex-wrap -m-4 collapsible-content">
-            {kungomaList.map((item, index) => (
+          <div className="marg flex flex-wrap collapsible-content -m-4">
+            {umwamiList.map((item, index) => (
               <ReactCardFlip
                 key={index}
                 className="p-4 lg:w-1/4"
@@ -60,7 +61,7 @@ function Ikenshavugokungoma() {
                 <div className="card front-card">
                   <h1 className="front">{item.title}</h1>
                   <br /><br />
-                  {item.content}
+                  {item.summary}
                   <br />
                   <button className="flip-button" onClick={() => handleFlip(index)}>
                     Bavuga
@@ -69,7 +70,7 @@ function Ikenshavugokungoma() {
                 <div className="card back-card">
                   <h1 className="backoo">Bavuga</h1>
                   <br /><br />
-                  Ntibavuga
+                  {item.details}
                   <br />
                   <button className="flip-button" onClick={() => handleFlip(index)}>
                     Ntibavuga
@@ -84,7 +85,7 @@ function Ikenshavugokungoma() {
   );
 }
 
-export default Ikenshavugokungoma;
+export default Ikenshkumwami;
 
 
 

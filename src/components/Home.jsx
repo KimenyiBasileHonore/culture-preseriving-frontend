@@ -19,7 +19,7 @@ export default function Home() {
                     </p>
                     <Link to="/Dashboard">
                         <button className="text-center border-4 w-28 h-19.9 bg-brown text-brown mt-6 font-bold rounded-lg hover:bg-cyan-950 hover:text-white" style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }}>
-                            More...
+                            Signup
                         </button>
                     </Link>
                     <Link to="/Admdash">

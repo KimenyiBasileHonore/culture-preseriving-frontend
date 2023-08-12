@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import ReactCardFlip from "react-card-flip";
 import "./Ikenshavugo.css"; // Import the CSS file
 
-function Ikenshicyansi() {
+function Ikenshkumwami() {
   const [isOpen, setIsOpen] = useState(false);
   const [flips, setFlips] = useState([]);
   const [currentFlipIndex, setCurrentFlipIndex] = useState(-1);
-  const [icyansiList, setIcyansiList] = useState([]);
+  const [umwamiList, setUmwamiList] = useState([]);
 
   const toggleCollapsible = () => {
     setIsOpen(!isOpen);
@@ -24,34 +24,34 @@ function Ikenshicyansi() {
     setCurrentFlipIndex(index);
   };
 
-  const fetchIcyansiList = async () => {
+  const fetchUmwamiList = async () => {
     try {
-      const response = await fetch("/api/icyansi"); // Use the correct backend API URL here
+      const response = await fetch("http://localhost:4050/api/icyansi/icyansi"); // Use the correct backend API URL here
       const data = await response.json();
-      setIcyansiList(data);
+      setUmwamiList(data);
       setFlips(Array(data.length).fill(false));
     } catch (error) {
-      console.error("Error fetching icyansi list:", error);
+      console.error("Error fetching umwami list:", error);
     }
   };
 
   useEffect(() => {
-    fetchIcyansiList();
+    fetchUmwamiList();
   }, []);
 
   return (
-    <div>
+    <div className="mt-16">
       <div className={`collapsible ${isOpen ? 'open' : ''}`}>
         <div className="collapsible-header" onClick={toggleCollapsible}>
           <div className="header-content">
-            <h1 class="title-font sm:text-2xl  text-xl font-medium text-gray-900 mb-3">Ku bijyanye n’icyansi, Isekuru, Ingobyi, Igisabo, Umuheto n’injishon’ibindi</h1>
+            <h1 class="title-font sm:text-2xl   text-xl font-medium text-gray-900 mb-3">Ku bijyanye n’icyansi, Isekuru, Ingobyi, Igisabo, Umuheto n’injishon’ibindi</h1>
             <span className={`arrow ${isOpen ? 'up' : 'down'}`}></span>
           </div>
         </div>
         <hr /><br /> 
         {isOpen && (
           <div className="marg flex flex-wrap collapsible-content -m-4">
-            {icyansiList.map((item, index) => (
+            {umwamiList.map((item, index) => (
               <ReactCardFlip
                 key={index}
                 className="p-4 lg:w-1/4"
@@ -85,10 +85,7 @@ function Ikenshicyansi() {
   );
 }
 
-export default Ikenshicyansi;
-
-
-
+export default Ikenshkumwami;
 
 
 

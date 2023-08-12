@@ -26,7 +26,7 @@ function Ikenshkumwami() {
 
   const fetchUmwamiList = async () => {
     try {
-      const response = await fetch("/api/umwami"); // Use the correct backend API URL here
+      const response = await fetch("http://localhost:4050/api/umwami/umwami"); // Use the correct backend API URL here
       const data = await response.json();
       setUmwamiList(data);
       setFlips(Array(data.length).fill(false));

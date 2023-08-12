@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import ReactCardFlip from "react-card-flip";
 import "./Ikenshavugo.css"; // Import the CSS file
 
-function Ikeshantunibintu() {
+function Ikenshkumwami() {
   const [isOpen, setIsOpen] = useState(false);
   const [flips, setFlips] = useState([]);
   const [currentFlipIndex, setCurrentFlipIndex] = useState(-1);
-  const [ahantuList, setAhantuList] = useState([]);
+  const [umwamiList, setUmwamiList] = useState([]);
 
   const toggleCollapsible = () => {
     setIsOpen(!isOpen);
@@ -24,23 +24,23 @@ function Ikeshantunibintu() {
     setCurrentFlipIndex(index);
   };
 
-  const fetchAhantuList = async () => {
+  const fetchUmwamiList = async () => {
     try {
-      const response = await fetch("/api/ahantu"); // Use the correct backend API URL here
+      const response = await fetch("http://localhost:4050/api/ahantu/ahantu"); // Use the correct backend API URL here
       const data = await response.json();
-      setAhantuList(data);
+      setUmwamiList(data);
       setFlips(Array(data.length).fill(false));
     } catch (error) {
-      console.error("Error fetching ahantu list:", error);
+      console.error("Error fetching umwami list:", error);
     }
   };
 
   useEffect(() => {
-    fetchAhantuList();
+    fetchUmwamiList();
   }, []);
 
   return (
-    <div>
+    <div className="mt-16">
       <div className={`collapsible ${isOpen ? 'open' : ''}`}>
         <div className="collapsible-header" onClick={toggleCollapsible}>
           <div className="header-content">
@@ -51,7 +51,7 @@ function Ikeshantunibintu() {
         <hr /><br /> 
         {isOpen && (
           <div className="marg flex flex-wrap collapsible-content -m-4">
-            {ahantuList.map((item, index) => (
+            {umwamiList.map((item, index) => (
               <ReactCardFlip
                 key={index}
                 className="p-4 lg:w-1/4"
@@ -63,7 +63,7 @@ function Ikeshantunibintu() {
                   <br /><br />
                   {item.summary}
                   <br />
-                  <button className="btn flip-button" onClick={() => handleFlip(index)}>
+                  <button className="flip-button" onClick={() => handleFlip(index)}>
                     Bavuga
                   </button>
                 </div>
@@ -85,7 +85,7 @@ function Ikeshantunibintu() {
   );
 }
 
-export default Ikeshantunibintu;
+export default Ikenshkumwami;
 
 
 

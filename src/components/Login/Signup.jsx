@@ -20,6 +20,14 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log("Form data before submission:", {
+      username,
+      fullname,
+      phone,
+      email,
+      password,
+    });
+
     // Create a user object with the form data
     const user = {
       username,
@@ -31,7 +39,7 @@ export default function Signup() {
 
     try {
       // Send a POST request to the signup endpoint with the user data
-      const response = await axios.post("/signup", user);
+      const response = await axios.post("http://localhost:4050/api/user/signup", user);
 
       // Handle the successful signup response
       console.log(response.data); // You can customize the handling according to your needs
@@ -53,7 +61,7 @@ export default function Signup() {
   return (
     <div className="back">
 
-      <section class="c1  py-10 ">
+      <section class="c1  py-8 ">
         <div class=" justify-right px-10 py-10 ">
           <div class="flex-col w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0.1  ">
             <div class="p-6 space-y-4 md:space-y-9 sm:p-4 " >
@@ -68,7 +76,8 @@ export default function Signup() {
                   <input
                     type="text"
                     name="username"
-                    onChange={handleSubmit}
+                    value={username}
+  onChange={(e) => setUsername(e.target.value)}
                     id="username"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 "
                     placeholder=""
@@ -82,7 +91,8 @@ export default function Signup() {
                   <input
                     type="text"
                     name="fullName"
-                    onChange={handleSubmit}
+                    value={fullname}
+  onChange={(e) => setFullname(e.target.value)}
                     id="fullName"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 "
                     placeholder=""
@@ -96,7 +106,8 @@ export default function Signup() {
                   <input
                     type="email"
                     name="email"
-                    onChange={handleSubmit}
+                    value={email}
+  onChange={(e) => setEmail(e.target.value)}
                     id="email"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 "
                     placeholder="name@company.com"
@@ -113,7 +124,8 @@ export default function Signup() {
                   <input
                     type="password"
                     name="password"
-                    onChange={handleSubmit}
+                    value={password}
+  onChange={(e) => setPassword(e.target.value)}
                     id="password"
                     class="bg-gray-50 border border-gray-300 sm:text-sm rounded-lg block w-full p-2.5"
                     placeholder="••••••••"
@@ -130,7 +142,8 @@ export default function Signup() {
                   <input
                     type="number"
                     name="phone"
-                    onChange={handleSubmit}
+                    value={phone}
+  onChange={(e) => setPhone(e.target.value)}
                     id="phone_number"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg  block w-full p-2.5"
                     placeholder="+2507•••••"

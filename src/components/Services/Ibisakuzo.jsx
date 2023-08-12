@@ -4,15 +4,15 @@ const QuestionPage = () => {
   const [questions, setQuestions] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [submittedAnswers, setSubmittedAnswers] = useState({});
 
   useEffect(() => {
-    // Fetch questions from the backend when the component mounts
     fetchQuestions();
   }, []);
 
   const fetchQuestions = async () => {
     try {
-      const response = await fetch('/api/questions'); // Replace with your backend API endpoint
+      const response = await fetch('http://localhost:4050/api/ibisakuzo/ibisakuzo');
       if (!response.ok) {
         throw new Error('Failed to fetch questions');
       }
@@ -24,145 +24,137 @@ const QuestionPage = () => {
   };
 
   const handleAnswerClick = (questionId, answerId) => {
-        setSelectedAnswers((prevAnswers) => ({
-          ...prevAnswers,
-          [questionId]: answerId,
-        }));
-      };
-    
-      const handleNextSlide = () => {
-        setCurrentSlide((prevSlide) => prevSlide + 1);
-        window.scrollTo(0, 0);
-      };
-    
-      const handlePrevSlide = () => {
-        setCurrentSlide((prevSlide) => prevSlide - 1);
-        window.scrollTo(0, 0);
-      };
-    
+    setSelectedAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [questionId]: answerId,
+    }));
+  };
 
-  // Rest of the component remains the same...
+  const handleSubmitAnswer = (questionId) => {
+    setSubmittedAnswers((prevSubmittedAnswers) => ({
+      ...prevSubmittedAnswers,
+      [questionId]: true,
+    }));
+  };
 
-  const startIndex = currentSlide * 10;
-  const endIndex = startIndex + 10;
-  const currentQuestions = questions.slice(startIndex, endIndex);
+  const handleNextSlide = () => {
+    setCurrentSlide((prevSlide) => prevSlide + 1);
+    setSelectedAnswers({});
+    setSubmittedAnswers({});
+    window.scrollTo(0, 0);
+  };
 
-  const currentPage = currentSlide + 1;
-  const totalSlides = Math.ceil(questions.length / 10);
+  const handlePrevSlide = () => {
+    setCurrentSlide((prevSlide) => prevSlide - 1);
+    setSelectedAnswers({});
+    setSubmittedAnswers({});
+    window.scrollTo(0, 0);
+  };
+
+  const currentQuestion = questions[currentSlide];
+  const totalSlides = questions.length;
 
   return (
-    <div className='mt-16'> 
-      
+    <div className='mt-16'>
       <h1 className="section-heading">IBISAKUZO</h1>
-            <hr /><br />
-            <p>Ibisakuzo ni umukino wo mu magambo, ibibazo n’ibisubizo bihimbaza abakuru 
-              n’abato kandi birimo ubuhanga. Nkuko amateka y’ubuvanganzo nyarwanda abigaragaza,
-              ibisakuzo nabyo byagiraga abahimbyi b’inzobere muri byo, bahoraga bacukumbura 
-              ijoro n’umunsi, kugirango barusheho kunoza no gukungahaza uwo mukino. 
-              Dore zimwe mu ngero z’ibisakuzo.</p> <br />
-      <div className="max-w-md mx-auto mt-16 bg-white rounded shadow ">
-       <div className="px-6 py-4 ">
-        <div>
-        <div className="flex justify-between mt-4">
-          <button
-            onClick={handlePrevSlide}
-            disabled={currentSlide === 0}
-            className="px-4 py-2 bg-gray-200 rounded text-gray-700"
-          >
-            Back
-          </button>
-          <div>
-            <span className="text-gray-500 mr-2">{currentPage}</span>
-            <span className="text-gray-500">/</span>
-            <span className="text-gray-500 ml-2">{totalSlides}</span>
-          </div>
-          <button
-            onClick={handleNextSlide}
-            disabled={endIndex >= questions.length}
-            className="px-4 py-2 bg-blue-500 rounded text-white"
-          >
-            Next
-          </button>
-        </div>
-        <br/>
-        </div>
-        {currentQuestions.map((question) => (
-          
-          <div key={question.id} className="mb-4 p-4 border rounded">
-            
-            <h3 className="text-lg font-semibold mb-2">{question.question}</h3>
-            <ul>
-              {question.answers.map((answer) => {
-                const isSelected = selectedAnswers[question.id] === answer.id;
-                const isCorrect = isSelected && answer.isCorrect;
-                const isIncorrect = isSelected && !answer.isCorrect;
+      <hr /><br />
+      <p>Ibisakuzo ni umukino wo mu magambo, ibibazo n’ibisubizo bihimbaza abakuru n’abato kandi birimo ubuhanga. Nkuko amateka y’ubuvanganzo nyarwanda abigaragaza, ibisakuzo nabyo byagiraga abahimbyi b’inzobere muri byo, bahoraga bacukumbura ijoro n’umunsi, kugirango barusheho kunoza no gukungahaza uwo mukino. Dore zimwe mu ngero z’ibisakuzo.</p>
+      <br />
 
-                return (
-                  <li
+      <div className="max-w-md mx-auto mt-16 bg-white rounded shadow">
+        <div className="px-6 py-4">
+          {currentQuestion && (
+            <div key={currentQuestion.id} className="mb-4 p-4 border rounded">
+              <h3 className="text-lg font-semibold mb-2">
+                {currentSlide + 1}. {currentQuestion.question}
+              </h3>
+              <ul>
+                {currentQuestion.answers.map((answer) => {
+                  const isSelected = selectedAnswers[currentQuestion.id] === answer.id;
+                  const isCorrect = answer.isCorrect;
+                  const isSubmitted = submittedAnswers[currentQuestion.id];
+
+                  return (
+                    <li
                     key={answer.id}
                     className={`flex items-center py-1 cursor-pointer ${
-                      isCorrect
-                        ? 'bg-blue-100 text-blue-700'
-                        : isIncorrect
-                        ? 'bg-red-100 text-red-700'
+                      isSubmitted
+                        ? isCorrect
+                          ? 'bg-blue-100 text-blue-700'
+                          : isSelected
+                          ? 'bg-red-100 text-red-700'
+                          : ''
                         : 'hover:bg-gray-100'
                     }`}
-                    onClick={() => handleAnswerClick(question.id, answer.id)}
+                    onClick={() => {
+                      if (!isSubmitted) {
+                        handleAnswerClick(currentQuestion.id, answer.id);
+                        handleSubmitAnswer(currentQuestion.id);
+                      }
+                    }}
                   >
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center border border-gray-400 mr-4">
-                      {isSelected && (
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center border border-gray-400 mr-4 ${isSelected && !isSubmitted ? 'bg-white' : ''}`}>
+                      {isSelected && !isSubmitted && (
                         <svg
-                          className={`w-4 h-4 ${
-                            isCorrect ? 'text-blue-700' : 'text-red-700'
-                          }`}
+                          className={`w-4 h-4 text-blue-700`}
                           fill="currentColor"
                           viewBox="0 0 20 20"
                         >
-                          {isCorrect ? (
-                            <path
-                              fillRule="evenodd"
-                              d="M5 10l2-2 5 5L15 7l2 2-7 7z"
-                            />
-                          ) : (
-                            <path
-                              fillRule="evenodd"
-                              d="M13.414 6.586a2 2 0 0 0-2.828 0L10 7.758l-1.586-1.172a2 2 0 0 0-2.828 2.828L7.172 10l-1.172 1.586a2 2 0 0 0 2.828 2.828L10 12.242l1.586 1.172a2 2 0 0 0 2.828-2.828L12.828 10l1.172-1.586a2 2 0 0 0 0-2.828z"
-                            />
-                          )}
+                          <path fillRule="" d="" />
                         </svg>
                       )}
                     </div>
                     <span>{answer.text}</span>
                   </li>
-                );
-              })}
-            </ul>
-            
+                
+                  );
+                })}
+              </ul>
+              {submittedAnswers[currentQuestion.id] && (
+                <div className="mt-2">
+                  <div
+                    className={`mb-2 ${
+                      currentQuestion.answers.find(answer => answer.isCorrect && selectedAnswers[currentQuestion.id] !== answer._id) 
+                      ? 'text-red-700'
+                      : 'text-blue-700'
+                    }`}
+                  >
+                    Correct Answer: {currentQuestion.answers.find(answer => answer.isCorrect).text}
+                  </div>
+                  <div>
+                    Your Answer: {currentQuestion.answers.find(answer => answer.id === selectedAnswers[currentQuestion.id]).text}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          <div className="flex justify-between mt-4">
+            <button
+              onClick={handlePrevSlide}
+              disabled={currentSlide === 0}
+              className="px-4 py-2 bg-gray-200 rounded text-gray-700"
+            >
+              Back
+            </button>
+            <div>
+              <span className="text-gray-500 mr-2">{currentSlide + 1}</span>
+              <span className="text-gray-500">/</span>
+              <span className="text-gray-500 ml-2">{totalSlides}</span>
+            </div>
+            {currentQuestion && (
+              <button
+                onClick={handleNextSlide}
+                disabled={currentSlide === totalSlides - 1}
+                className="px-4 py-2 bg-blue-500 rounded text-white"
+              >
+                Next
+              </button>
+            )}
           </div>
-        ))}
-        <div className="flex justify-between mt-4">
-          <button
-            onClick={handlePrevSlide}
-            disabled={currentSlide === 0}
-            className="px-4 py-2 bg-gray-200 rounded text-gray-700"
-          >
-            Back
-          </button>
-          <div>
-            <span className="text-gray-500 mr-2">{currentPage}</span>
-            <span className="text-gray-500">/</span>
-            <span className="text-gray-500 ml-2">{totalSlides}</span>
-          </div>
-          <button
-            onClick={handleNextSlide}
-            disabled={endIndex >= questions.length}
-            className="px-4 py-2 bg-blue-500 rounded text-white"
-          >
-            Next
-          </button>
         </div>
       </div>
-      </div> </div>
+    </div>
   );
 };
 

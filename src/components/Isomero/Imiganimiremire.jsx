@@ -2,92 +2,85 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import '../Services/Isomero.css';
+import './Isomero.css';
+
+
 
 export default function Imiganimiremire() {
   const [selectedBox, setSelectedBox] = useState(null);
-  const [boxesImigani, setBoxesImigani] = useState([]);
+  const [boxesIbyivugo, setBoxesIbyivugo] = useState([]);
 
   useEffect(() => {
-    // Fetch the data from the backend API when the component mounts
-    axios.get('/api/imiganimiremire')
-      .then((response) => {
-        setBoxesImigani(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
+    // Fetch data from the backend API using Axios
+    axios.get('http://localhost:4050/api/imiganimiremire/imiganimiremire')
+      .then(response => setBoxesIbyivugo(response.data))
+      .catch(error => console.error('Error fetching data:', error));
   }, []);
 
   const handleBoxClick = (boxId) => {
-    setSelectedBox(selectedBox === boxId ? null : boxId);
-  };
-
-  const handleBackClick = () => {
-    setSelectedBox(null);
+    console.log("Selected box:", boxId);
+    setSelectedBox(boxId);
   };
 
   const handleGoBack = () => {
     setSelectedBox(null);
   };
 
-  const breakDownDetails = (details) => {
-    const paragraphs = details.split('\n');
-
-    return paragraphs.map((paragraph, index) => (
-      <p key={index}>
-        {paragraph.split('\n\n').map((line, lineIndex) => (
-          <React.Fragment key={lineIndex}>
-            {line}
-            <br />
-          </React.Fragment>
-        ))}
-      </p>
-    ));
+  const ExpandedBox = ({ boxData }) => {
+    const { title, details } = boxData;
+    const formattedDetails = details.replace(/\\n/g, '\n'); // Convert stored \n to actual line breaks
+  
+    return (
+      <div className="expanded-box">
+        <button className="back-button" onClick={handleGoBack}>
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+        <h3>{title}</h3>
+        <div className="box-details">
+          {formattedDetails.split('\n').map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))}
+        </div>
+        <div className="overlay" onClick={handleGoBack} />
+      </div>
+    );
   };
 
   return (
     <div>
-      <div className="container mt-16">
-        <h1 className="flex section-heading">Imigani miremire</h1>
-        <p>
-          Ibyivugo ni nk' ibisingizo bisingiza intwari ku rugamba, bigasingiza intwaro, zikarata n'ubutwari bwabo.
-          Ibyivugo by' imyato, byabaga ari ibyivugo birebire kandi bikagira ibice bitaga "IMYATO".
-        </p>
-        <br />
-        <div>
-          <div className="mt-16">
-            {selectedBox ? (
-              <div>
-                <div className="expanded-box">
-                  <h3>{boxesImigani[selectedBox - 1].title}</h3>
-                  <div className="box-details">
-                    <button className="back-button" onClick={handleGoBack}>
-                      <FontAwesomeIcon icon={faArrowLeft} />
-                    </button>
-                    {breakDownDetails(boxesImigani[selectedBox - 1].details)}
+      {/* Your other JSX code here */}
+      <div className="mt-16">
+      </div>
+      <div>
+        <section className="text-gray-600 body-font">
+          <div className="container">
+          <h1 className="flex section-heading">Imigani miremire</h1>
+            <p>
+              Ibyivugo ni nk' ibisingizo bisingiza intwari ku rugamba, bigasingiza intwaro, zikarata n'ubutwari bwabo...
+            </p>
+            <br />
+            <div>
+              <div className="mt-16">
+                {selectedBox !== null ? (
+                  <ExpandedBox boxData={boxesIbyivugo[selectedBox]} />
+                ) : (
+                  <div className="boxes-container">
+                    {boxesIbyivugo.map((box, index) => (
+                      <div
+                        key={box._id}
+                        className="box rounded-lg"
+                        onClick={() => handleBoxClick(index)}
+                      >
+                        <h3 className='title-font sm:text-1xl text-xl font-medium text-gray-900 mb-3'>{box.title}</h3>
+                        <p>{box.summary}</p>
+                      </div>
+                    ))}
                   </div>
-                  <div className="overlay" onClick={handleBackClick} />
-                </div>
+                )}
               </div>
-            ) : (
-              <div className="boxes-container">
-                {boxesImigani.map((box) => (
-                  <div
-                    key={box._id}
-                    className="box rounded-lg"
-                    onClick={() => handleBoxClick(box._id)}
-                  >
-                    <h3 className="title-font sm:text-1xl text-xl font-medium text-gray-900 mb-3">
-                      {box.title}
-                    </h3>
-                    <p>{box.summary}</p>
-                  </div>
-                ))}
-              </div>
-            )}
+            </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );

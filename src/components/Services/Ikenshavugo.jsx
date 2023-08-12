@@ -7,6 +7,7 @@ import Ikenshavugokungoma from "./Ikenshavugokungoma";
 import Ikenshavugokunka from "./Ikenshavugokunka";
 import Ikenshicyansi from "./Ikenshicyansi";
 import Ikeshantunibintu from "./Ikeshantunibintu";
+import axios from "axios";
 
 
 function Ikenshavugo() {
@@ -34,9 +35,8 @@ function Ikenshavugo() {
     useEffect(() => {
         const fetchIkenshavugoData = async () => {
             try {
-                const response = await fetch("/api/ikenshavugo"); // Replace with your backend API endpoint for fetching Ikenshavugo data
-                const data = await response.json();
-                setIkenshavugoList(data);
+                const response = await axios.get("/api/ikenshavugo"); // Use axios to fetch data
+                setIkenshavugoList(response.data); // Use response.data
             } catch (error) {
                 console.error("Error fetching Ikenshavugo data:", error);
             }
@@ -44,11 +44,21 @@ function Ikenshavugo() {
 
         fetchIkenshavugoData();
     }, []);
-
     return (
         <div>
             <div className="mt-16">
                 {/* ... rest of your content ... */}
+                <h1 class="title-font sm:text-2xl section-heading text-xl font-medium text-gray-900 mb-3">IKESHAMVUGO</h1>
+                 <p class="leading-relaxed mb-3">Ikeshamvugo ni ubuhanga bukoreshwa mu kuvuga no guhanga mu kinyarwanda.
+                     Iyo akaba ari imvugo inoze, yuje ikinyabupfura, ifite inganzo kandi ivugitse ku buryo bunoze. Ikeshamvugo
+                     ahanini, ni imvugo ikoreshwa mu guha agaciro umuntu uyu n’uyu cyangwa ikintu iki n’iki bitewe n’akamaro
+                     gifite mu muco w’Abanyarwanda, bityo hakirindwa gukoreshwa izina ryacyo mu buryo bukocamye..</p><br />
+                 <p class="leading-relaxed mb-3">Mu Ikeshamvugo niho hakoreshwa ijambo « Ntibavuga ,Bavuga  ».Umuntu akaba yabasha gutandukanya imvugo
+                     ikoreshwa k’umuntu mukuru ,umwana ,umuyobozi, inyamaswa n’ibindi Muri zo mvugo zose twavuze haruguru
+                     ntan’imwe idakoreshwa,umwihariko wazo ,nuko zizamo amarangamutima y’ahantu uvuga ari ,uwo agiye kuvuga
+                     cyangwa icyo agiye kuvuga.Dore zimwe mu ngero z’ikeshamvugo rikunzwe gukoreshwa mu mvugo Nyarwanda</p>
+
+               
                 <div className={`collapsible ${isOpen ? "open" : ""}`}>
                     <div className="collapsible-header" onClick={toggleCollapsible}>
                         {/* ... rest of the header content ... */}

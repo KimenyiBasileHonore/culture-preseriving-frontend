@@ -11,7 +11,7 @@ export default function Maindashboard() {
     const fetchData = async () => {
       try {
         // Fetch data for the "Registration" chart
-        const response = await axios.get("/users/registered-users-count");
+        const response = await axios.get("http://localhost:4050/api/user/all");
         const count = response.data.count;
         setRegisteredUsersCount(count);
       } catch (error) {

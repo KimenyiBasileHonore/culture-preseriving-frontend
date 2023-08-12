@@ -35,7 +35,7 @@ export default function Navigation() {
                   to="Signup"
                   className="w-32 text-white font-medium rounded-full text-sm px-6 py-2.5 text-center bg-blue-900 hover:bg-cyan-950 hover:text-white rounded py-1 px-2 rounded"
                 >
-                  Register
+                  Login
                 </Link>
               </div>
               <div>

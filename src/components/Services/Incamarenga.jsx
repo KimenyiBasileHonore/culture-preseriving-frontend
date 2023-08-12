@@ -6,7 +6,7 @@ export default function Incamarenga() {
 
   useEffect(() => {
     // Fetch data from the backend API
-    fetch("/api/incamarenga")
+    fetch("http://localhost:4050/api/incamarenga/incamarenga")
       .then((response) => response.json())
       .then((data) => setSections(data))
       .catch((error) => console.error("Error fetching data:", error));

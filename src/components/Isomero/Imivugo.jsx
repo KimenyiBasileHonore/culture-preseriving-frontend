@@ -1,95 +1,112 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import '../Services/Isomero.css';
-import axios from 'axios'; // Make sure to install axios using npm or yarn.
+import axios from 'axios';
+import './Isomero.css';
 
-export default function Imivugo() {
+
+
+export default function Imiganimiremire() {
   const [selectedBox, setSelectedBox] = useState(null);
-  const [boxesImivugo, setBoxesImivugo] = useState([]);
+  const [boxesIbyivugo, setBoxesIbyivugo] = useState([]);
 
   useEffect(() => {
-    // Fetch data from your Node.js server when the component mounts
-    axios
-      .get('/api/imivugo')
-      .then((response) => {
-        setBoxesImivugo(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching Imivugo data:', error);
-      });
+    // Fetch data from the backend API using Axios
+    axios.get('http://localhost:4050/api/imivugo/imivugo')
+      .then(response => setBoxesIbyivugo(response.data))
+      .catch(error => console.error('Error fetching data:', error));
   }, []);
 
   const handleBoxClick = (boxId) => {
-    setSelectedBox(selectedBox === boxId ? null : boxId);
+    console.log("Selected box:", boxId);
+    setSelectedBox(boxId);
   };
 
   const handleGoBack = () => {
     setSelectedBox(null);
   };
 
-  const breakDownDetails = (details) => {
-    const paragraphs = details.split('\n');
+  const ExpandedBox = ({ boxData }) => {
+    const { title, details } = boxData;
+    const formattedDetails = details.replace(/\\n\\n/g, '\n\n').replace(/\\n/g, '\n');
+    
+    const paragraphs = formattedDetails.split('\n\n');
 
-    return paragraphs.map((paragraph, index) => (
-      <p key={index}>
-        {paragraph.split('\n\n').map((line, lineIndex) => (
-          <React.Fragment key={lineIndex}>
-            {line}
-            <br />
-          </React.Fragment>
-        ))}
-      </p>
-    ));
-  };
+    return (
+        <div className="expanded-box">
+            <button className="back-button" onClick={handleGoBack}>
+                <FontAwesomeIcon icon={faArrowLeft} />
+            </button>
+            <h3>{title}</h3>
+            <div className="box-details">
+                {paragraphs.map((paragraph, index) => (
+                    <div key={index}>
+                        {paragraph.split('\n').map((line, lineIndex) => (
+                            <React.Fragment key={lineIndex}>
+                                {lineIndex > 0 && <br />} {/* Add <br> for line breaks within a paragraph */}
+                                {line}
+                            </React.Fragment>
+                        ))}
+                        {index < paragraphs.length - 1 && <div className="paragraph-break" />} {/* Add paragraph break */}
+                    </div>
+                ))}
+            </div>
+            <div className="overlay" onClick={handleGoBack} />
+        </div>
+    );
+};
+
+
 
   return (
     <div>
-      <div className="container mt-16">
-        <h1 className="flex section-heading">Imivugo</h1>
-        <p>
-          Ibyivugo ni nk' ibisingizo bisingiza intwari ku rugamba, bigasingiza
-          intwaro, zikarata n'ubutwari bwabo. Ibyivugo by' imyato, byabaga ari
-          ibyivugo birebire kandi bikagira ibice bitaga "IMYATO".
-        </p>
+      {/* Your other JSX code here */}
+      <div className="mt-16">
+      {/* <h1 className="section-heading">ISOMERO</h1>
+        <hr />
         <br />
-        <div>
-          <div className="mt-16">
-            {selectedBox ? (
-              <div>
-                <div className="expanded-box">
-                  <h3>{boxesImivugo[selectedBox - 1].title}</h3>
-                  <div className="box-details">
-                    <button className="back-button" onClick={handleGoBack}>
-                      <FontAwesomeIcon icon={faArrowLeft} />
-                    </button>
-                    {breakDownDetails(boxesImivugo[selectedBox - 1].details)}
+        <p>
+          Nkuko amateka y’ubuvanganzo nyarwanda abigaragaza, umugani n’ipfundo ry’amagambo...
+        </p>
+        <br /> */}
+      </div>
+      <div>
+        <section className="text-gray-600 body-font">
+          <div className="container">
+          <h1 className="flex section-heading">Imivugo</h1>
+            <p>
+              Ibyivugo ni nk' ibisingizo bisingiza intwari ku rugamba, bigasingiza intwaro, zikarata n'ubutwari bwabo...
+            </p>
+            <br />
+            <div>
+              <div className="mt-16">
+                {selectedBox !== null ? (
+                  <ExpandedBox boxData={boxesIbyivugo[selectedBox]} />
+                ) : (
+                  <div className="boxes-container">
+                    {boxesIbyivugo.map((box, index) => (
+                      <div
+                        key={box._id}
+                        className="box rounded-lg"
+                        onClick={() => handleBoxClick(index)}
+                      >
+                        <h3 className='title-font sm:text-1xl text-xl font-medium text-gray-900 mb-3'>{box.title}</h3>
+                        <p>{box.summary}</p>
+                      </div>
+                    ))}
                   </div>
-                  <div className="overlay" onClick={handleGoBack} />
-                </div>
+                )}
               </div>
-            ) : (
-              <div className="boxes-container">
-                {boxesImivugo.map((box) => (
-                  <div
-                    key={box._id} // Assuming your Imivugo model has "_id" field from MongoDB
-                    className="box rounded-lg"
-                    onClick={() => handleBoxClick(box._id)}
-                  >
-                    <h3 className="title-font sm:text-1xl text-xl font-medium text-gray-900 mb-3">
-                      {box.title}
-                    </h3>
-                    <p>{box.summary}</p>
-                  </div>
-                ))}
-              </div>
-            )}
+            </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );
 }
+
+
+
 
 
 

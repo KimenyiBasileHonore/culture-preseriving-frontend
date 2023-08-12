@@ -7,7 +7,7 @@ export default function Imigani() {
 
   useEffect(() => {
     // Make an API call to fetch the data from the backend
-    axios.get("/api/imigani")
+    axios.get("http://localhost:4050/api/imigani/imigani")
       .then((response) => {
         setContentList(response.data);
       })
@@ -30,12 +30,20 @@ export default function Imigani() {
       </p>{" "}
       <br />
       <ul className="content-list">
+        {contentList.map((contentObject, index) => (
+          <li key={index} className="content-item">
+            {contentObject.content} {/* Render the 'content' property */}
+          </li>
+        ))}
+      </ul>
+
+      {/* <ul className="content-list">
         {contentList.map((content, index) => (
           <li key={index} className="content-item">
             {content}
           </li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 }
@@ -116,7 +124,33 @@ export default function Imigani() {
 //         " Ahari amahoro rwisasira batanu", " Ahari amahoro umuhoro urogosha", " Uwihanganye yahinze igiteme cy’inkuba", " Uwitonze yamize ibinoze",
 //         " Uwitonze yakamye ishashi", " Uwitonze yakamye iyateraga umugeri", " Ubamba isi ntakurura", " Isi ntigira inyiturano",
 //         " Ingizi yabwo ntiyabugaruriwe", " Nyamwanga kumva ntiyanze no kubona", " Imirimo 2 yananiye impyisi", " Umwana usuzugura bwira aneye rimwe",
-//         " Umugabo utabwirwa yikebeye inyama itaribwa", " Ujya mu ishyamba utazi ukahaca inkoni izira", " Ikiganza gito kimisha umwana impengeri",
+//         " Umugabo utabwirwa yikebeye inyama itaribwa",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// " Ujya mu ishyamba utazi ukahaca inkoni izira", " Ikiganza gito kimisha umwana impengeri",
 //         " Inyamaswa idakema yishwe n’umututizi", " Iyihuse yabyaye igihumye", " Utinda mu nturo ukahamburirwa", " Nyirikirimi kibi yatanze umurozi gupfa",
 //         " Nyakibi ntara bushyitsi", " Ujya mu rw’undi asiga ingeso ku muryango", " Udahinze ahakomeye ntasarura amakoma ngo akome mu benzi",
 //         " Umukobwa aba umwe agatukisha bose", " Izina ryiza ntiryabujije umukobwa kuruha", " Inkingi imwe ntigera inzu", " Inzu irirwamo ntivugirwamo",

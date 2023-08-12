@@ -2,138 +2,97 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import '../Services/Isomero.css';
+import './Isomero.css';
 
-export default function Imiganiabana() {
+
+
+export default function Imiganimiremire() {
   const [selectedBox, setSelectedBox] = useState(null);
-  const [boxesImiganiabana, setBoxesImiganiabana] = useState([]);
+  const [boxesIbyivugo, setBoxesIbyivugo] = useState([]);
 
   useEffect(() => {
-    fetchImiganiabana();
+    // Fetch data from the backend API using Axios
+    axios.get('http://localhost:4050/api/imiganiabana/imiganiabana')
+      .then(response => setBoxesIbyivugo(response.data))
+      .catch(error => console.error('Error fetching data:', error));
   }, []);
 
-  const fetchImiganiabana = async () => {
-    try {
-      const response = await axios.get('/api/imiganiabana');
-      setBoxesImiganiabana(response.data);
-    } catch (error) {
-      console.log('Error fetching Imiganiabana:', error);
-    }
-  };
-
   const handleBoxClick = (boxId) => {
-    setSelectedBox(selectedBox === boxId ? null : boxId);
-  };
-
-  const handleBackClick = () => {
-    setSelectedBox(null);
+    console.log("Selected box:", boxId);
+    setSelectedBox(boxId);
   };
 
   const handleGoBack = () => {
     setSelectedBox(null);
   };
 
-  const breakDownDetails = (details) => {
-    const paragraphs = details.split('\n');
-
-    return paragraphs.map((paragraph, index) => (
-      <p key={index}>
-        {paragraph.split('\n\n').map((line, lineIndex) => (
-          <React.Fragment key={lineIndex}>
-            {line}
-            <br />
-          </React.Fragment>
-        ))}
-      </p>
-    ));
-  };
-
-  const handleCreateBox = async () => {
-    try {
-      const newBoxData = {
-        title: "New Box Title",
-        summary: "New Box Summary",
-        details: "New Box Details",
-      };
-      const response = await axios.post('/api/imiganiabana', newBoxData);
-      setBoxesImiganiabana([...boxesImiganiabana, response.data]);
-    } catch (error) {
-      console.log('Error creating Imiganiabana:', error);
-    }
-  };
-
-  const handleUpdateBox = async (boxId) => {
-    try {
-      const updatedBoxData = {
-        title: "Updated Box Title",
-        summary: "Updated Box Summary",
-        details: "Updated Box Details",
-      };
-      const response = await axios.put(`/api/imiganiabana/${boxId}`, updatedBoxData);
-      const updatedBoxes = boxesImiganiabana.map((box) => {
-        if (box._id === boxId) {
-          return response.data;
-        }
-        return box;
-      });
-      setBoxesImiganiabana(updatedBoxes);
-    } catch (error) {
-      console.log('Error updating Imiganiabana:', error);
-    }
-  };
-
-  const handleDeleteBox = async (boxId) => {
-    try {
-      await axios.delete(`/api/imiganiabana/${boxId}`);
-      const updatedBoxes = boxesImiganiabana.filter((box) => box._id !== boxId);
-      setBoxesImiganiabana(updatedBoxes);
-    } catch (error) {
-      console.log('Error deleting Imiganiabana:', error);
-    }
+  const ExpandedBox = ({ boxData }) => {
+    const { title, details } = boxData;
+    const formattedDetails = details.replace(/\\n/g, '\n'); // Convert stored \n to actual line breaks
+  
+    return (
+      <div className="expanded-box">
+        <button className="back-button" onClick={handleGoBack}>
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+        <h3>{title}</h3>
+        <div className="box-details">
+          {formattedDetails.split('\n').map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))}
+        </div>
+        <div className="overlay" onClick={handleGoBack} />
+      </div>
+    );
   };
 
   return (
     <div>
-      <div className="container mt-16">
-        <h1 className="flex section-heading">Imigani y' abana</h1>
-        <p>
-          Ibyivugo ni nk' ibisingizo bisingiza intwari ku rugamba, bigasingiza intwaro, zikarata n'ubutwari bwabo. Ibyivugo by' imyato, byabaga ari ibyivugo birebire kandi bikagira ibice bitaga "IMYATO".
-        </p>
+      {/* Your other JSX code here */}
+      <div className="mt-16">
+      {/* <h1 className="section-heading">ISOMERO</h1>
+        <hr />
         <br />
-        <div>
-          <div className="mt-16">
-            {selectedBox ? (
-              <div>
-                <div className="expanded-box">
-                  <h3>{boxesImiganiabana[selectedBox - 1].title}</h3>
-                  <div className="box-details">
-                    <button className="back-button" onClick={handleGoBack}>
-                      <FontAwesomeIcon icon={faArrowLeft} />
-                    </button>
-                    {breakDownDetails(boxesImiganiabana[selectedBox - 1].details)}
+        <p>
+          Nkuko amateka y’ubuvanganzo nyarwanda abigaragaza, umugani n’ipfundo ry’amagambo...
+        </p>
+        <br /> */}
+      </div>
+      <div>
+        <section className="text-gray-600 body-font">
+          <div className="container">
+          <h1 className="flex section-heading">Imigani y 'abana</h1>
+            <p>
+              Ibyivugo ni nk' ibisingizo bisingiza intwari ku rugamba, bigasingiza intwaro, zikarata n'ubutwari bwabo...
+            </p>
+            <br />
+            <div>
+              <div className="mt-16">
+                {selectedBox !== null ? (
+                  <ExpandedBox boxData={boxesIbyivugo[selectedBox]} />
+                ) : (
+                  <div className="boxes-container">
+                    {boxesIbyivugo.map((box, index) => (
+                      <div
+                        key={box._id}
+                        className="box rounded-lg"
+                        onClick={() => handleBoxClick(index)}
+                      >
+                        <h3 className='title-font sm:text-1xl text-xl font-medium text-gray-900 mb-3'>{box.title}</h3>
+                        <p>{box.summary}</p>
+                      </div>
+                    ))}
                   </div>
-                  <div className="overlay" onClick={handleBackClick} />
-                </div>
+                )}
               </div>
-            ) : (
-              <div className="boxes-container">
-                {boxesImiganiabana.map((box, index) => (
-                  <div key={box._id} className="box rounded-lg" onClick={() => handleBoxClick(index + 1)}>
-                    <h3 className="title-font sm:text-1xl text-xl font-medium text-gray-900 mb-3">{box.title}</h3>
-                    <p>{box.summary}</p>
-                    <button className="update-button" onClick={() => handleUpdateBox(box._id)}>Update</button>
-                    <button className="delete-button" onClick={() => handleDeleteBox(box._id)}>Delete</button>
-                  </div>
-                ))}
-                <button className="create-button" onClick={handleCreateBox}>Create New Box</button>
-              </div>
-            )}
+            </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );
 }
+
 
 
 
