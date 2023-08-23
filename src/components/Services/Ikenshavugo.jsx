@@ -48,7 +48,7 @@ function Ikenshavugo() {
         <div>
             <div className="mt-16">
                 {/* ... rest of your content ... */}
-                <h1 class="title-font sm:text-2xl section-heading text-xl font-medium text-gray-900 mb-3">IKESHAMVUGO</h1>
+                <h1 class="section-heading mt-24">IKESHAMVUGO</h1>
                  <p class="leading-relaxed mb-3">Ikeshamvugo ni ubuhanga bukoreshwa mu kuvuga no guhanga mu kinyarwanda.
                      Iyo akaba ari imvugo inoze, yuje ikinyabupfura, ifite inganzo kandi ivugitse ku buryo bunoze. Ikeshamvugo
                      ahanini, ni imvugo ikoreshwa mu guha agaciro umuntu uyu n’uyu cyangwa ikintu iki n’iki bitewe n’akamaro

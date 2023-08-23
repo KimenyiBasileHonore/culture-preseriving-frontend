@@ -119,7 +119,7 @@ const QuestionPage = () => {
                       : 'text-blue-700'
                     }`}
                   >
-                    Correct Answer: {currentQuestion.answers.find(answer => answer.isCorrect).text}
+                    Igisubizo cy'ukuri: {currentQuestion.answers.find(answer => answer.isCorrect).text}
                   </div>
                   <div>
                     Your Answer: {currentQuestion.answers.find(answer => answer.id === selectedAnswers[currentQuestion.id]).text}

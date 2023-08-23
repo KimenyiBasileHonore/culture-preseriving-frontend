@@ -54,9 +54,11 @@ export default function Imiganimiremire() {
       <div>
         <section className="text-gray-600 body-font">
           <div className="container">
-          <h1 className="flex section-heading">Imigani miremire</h1>
+          <h1 className="flex section-heading">
+      <span className="highlight">IMIGANI</span><span className="spacer"></span> <span className="accent">MIREMIRE</span>
+    </h1>
             <p>
-              Ibyivugo ni nk' ibisingizo bisingiza intwari ku rugamba, bigasingiza intwaro, zikarata n'ubutwari bwabo...
+            Imigani miremire ivuga ibintu bitabayeho kandi babonaga ko bitanashoboka,ariko bakabivuga nk’ibyabayeho. Nk’uko amateka y’ubuvanganzo nyarwanda abigaragaza,imigani miremire ibarirwa mu buvanganzo nyemvugo bwo muri rubanda.
             </p>
             <br />
             <div>

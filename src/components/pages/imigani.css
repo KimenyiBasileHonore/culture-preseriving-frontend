@@ -1,0 +1,60 @@
+/* Service.css */
+.imigani-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .section-heading {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .section-divider {
+    border: none;
+    border-top: 2px solid #ddd;
+    margin: 20px 0;
+  }
+  
+  .search-container {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: box-shadow 0.2s;
+  }
+  
+  .search-input:focus {
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .content-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .content-item {
+    background-color: #fff;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s;
+  }
+  
+  .content-item:hover {
+    background-color: #f0f0f0;
+  }
+  

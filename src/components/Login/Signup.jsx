@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 
@@ -14,8 +13,10 @@ export default function Signup() {
   const [fullname, setFullname] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("user");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); 
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,29 +35,47 @@ export default function Signup() {
       fullname,
       phone,
       email,
+      role,
       password,
     };
 
     try {
-      // Send a POST request to the signup endpoint with the user data
-      const response = await axios.post("http://localhost:4050/api/user/signup", user);
+      console.log(user);
+      const response = await fetch("http://localhost:4050/api/user/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
 
-      // Handle the successful signup response
-      console.log(response.data); // You can customize the handling according to your needs
+      // Check if the response status is OK (200)
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData); // Customize the handling as needed
 
-      // Clear the form
-      setUsername("");
-      setFullname("");
-      setPhone("");
-      setEmail("");
-      setPassword("");
+        // Clear the form
+        setUsername("");
+        setFullname("");
+        setPhone("");
+        setEmail("");
+        setPassword("");
 
-      navigate("/dashboard");
+        navigate("/Dashboard");
+      }
+      else {
+        // Handle different error scenarios based on response status
+        if (response.status === 409) {
+          setErrorMessage("Username or email is already taken.");
+        } else {
+          setErrorMessage("An error occurred. Please try again later.");
+        }
+      }
     } catch (error) {
-      // Handle signup errors
-      console.error(error); // You can customize the error handling according to your needs
+      console.log(error); // Customize the error handling as needed
     }
   };
+
 
   return (
     <div className="back">
@@ -77,7 +96,7 @@ export default function Signup() {
                     type="text"
                     name="username"
                     value={username}
-  onChange={(e) => setUsername(e.target.value)}
+                    onChange={(e) => setUsername(e.target.value)}
                     id="username"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 "
                     placeholder=""
@@ -92,12 +111,27 @@ export default function Signup() {
                     type="text"
                     name="fullName"
                     value={fullname}
-  onChange={(e) => setFullname(e.target.value)}
+                    onChange={(e) => setFullname(e.target.value)}
                     id="fullName"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 "
                     placeholder=""
                     required
                   />
+                </div>
+                <div>
+                  <label htmlFor="role" className="block font-bold brown">
+                    {/* Choose Role */}
+                  </label>
+                  <select
+                    id="role"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    required
+                  >
+                    <option value="user">User</option>
+                    {/* <option value="admin">Admin</option> */}
+                  </select>
                 </div>
                 <div>
                   <label for="email" class="block  font-bold brown ">
@@ -107,7 +141,7 @@ export default function Signup() {
                     type="email"
                     name="email"
                     value={email}
-  onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                     id="email"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 "
                     placeholder="name@company.com"
@@ -125,7 +159,7 @@ export default function Signup() {
                     type="password"
                     name="password"
                     value={password}
-  onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                     id="password"
                     class="bg-gray-50 border border-gray-300 sm:text-sm rounded-lg block w-full p-2.5"
                     placeholder="••••••••"
@@ -143,14 +177,14 @@ export default function Signup() {
                     type="number"
                     name="phone"
                     value={phone}
-  onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) => setPhone(e.target.value)}
                     id="phone_number"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg  block w-full p-2.5"
                     placeholder="+2507•••••"
                     required
                   />
                 </div>
-
+                {errorMessage && <p className="text-red-500">{errorMessage}</p>}
                 <button
                   type="submit"
                   class="w-64 hover:bg-cyan-950 ml-16 text-white font-medium rounded-full text-sm px-6 py-2.5 text-center bg-blue-900"

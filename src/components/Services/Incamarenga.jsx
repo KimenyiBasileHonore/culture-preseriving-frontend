@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../pages/Service.css";
 
-export default function Incamarenga() {
+export default function Incamarenga({searchQuery}) {
   const [sections, setSections] = useState([]);
 
   useEffect(() => {
@@ -18,6 +18,10 @@ export default function Incamarenga() {
     setSections(updatedSections);
   };
 
+  const filteredContent = sections.filter((contentObject) =>
+  contentObject.title.toLowerCase().includes(searchQuery.toLowerCase())
+);
+
   return (
     <div>
       <div className="mt-16">
@@ -30,7 +34,7 @@ export default function Incamarenga() {
         </p>
       </div>
       <div>
-        {sections.map((section, index) => (
+      {filteredContent.map((section, index) => (
           <div key={index} className={`mt-8 collapsible ${section.isOpen ? 'open' : ''}`}>
             <div className="collapsible-header content-item" onClick={() => toggleCollapsible(index)}>
               {section.title}

@@ -27,7 +27,7 @@ export default function Service() {
                         <div className="h-68 bg-white imigani ml-10 pt-6 pb-24 mt-64 rounded-lg overflow-hidden text-center relative z-10">
                             <h1 className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">Imigani migufi</h1>
                             <p className="leading-relaxed text-sm mb-3">Nkuko amateka y’ubuvanganzo nyarwanda abigaragaza ,umugani n’ipfundo ry’amagambo atonze neza,Gacamigani yakagiriyemo ihame ridutoza gukora iki cyangwa se kudakora kiriya.</p>
-                            <Link to="#">
+                            <Link to="Login">
                                 <button type="submit" onClick={handleLearnMoreClick} className="w-32 text-white  font-medium hover:bg-cyan-950 rounded-full text-sm px-6 py-2.5 text-center bg-blue-900 ">Learn More</button>
                             </Link>
                         </div>
@@ -37,7 +37,7 @@ export default function Service() {
                         <div className="h-68 bg-white imigani ml-10 pt-6 pb-24 mt-64 rounded-lg overflow-hidden text-center relative z-10">
                             <h1 className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">Incamarenga</h1>
                             <p className="leading-relaxed mb-3">Umuntu aca amarenga ashaka kubwira uwo baziranye, icyo adashaka kubwira abamwumva bose. </p>
-                            <Link to="#">
+                            <Link to="Login">
                                 <button type="submit" onClick={handleLearnMoreClick} className="w-32  text-white font-medium hover:bg-cyan-950 rounded-full text-sm px-6 py-2.5 text-center bg-blue-900 ">Learn More</button>
                             </Link>
                         </div>
@@ -47,7 +47,7 @@ export default function Service() {
                         <div className="h-68 bg-white imigani ml-10 pt-6 pb-24 mt-64 rounded-lg overflow-hidden text-center relative z-10">
                             <h1 className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">Ikenshavugo</h1>
                             <p className="leading-relaxed mb-3">Ikeshamvugo ni ubuhanga bukoreshwa mu kuvuga no guhanga mu kinyarwanda. Iyo akaba ari imvugo inoze, yuje ikinyabupfura, ifite inganzo kandi ivugitse ku buryo bunoze.</p>
-                            <Link to="#">
+                            <Link to="Login">
                                 <button type="submit" onClick={handleLearnMoreClick} className="w-32 text-white font-medium hover:bg-cyan-950 rounded-full text-sm px-6 py-2.5 text-center bg-blue-900">Learn More</button>
                             </Link>
                         </div>
@@ -57,7 +57,7 @@ export default function Service() {
                         <div className="h-68 bg-white imigani ml-10 pt-6 pb-24 mt-64 rounded-lg overflow-hidden text-center relative z-10">
                             <h1 className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">Ibisakuzo</h1>
                             <p className="leading-relaxed mb-3">Ibisakuzo ni umukino wo mu magambo, ibibazo n’ibisubizo bihimbaza abakuru n’abato kandi birimo ubuhanga. Nkuko amateka y’ubuvanganzo nyarwanda abigaragaza, ibisakuzo nabyo byagiraga abahimbyi b’inzobere muri byo, bahoraga bacukumbura ijoro n’umunsi, kugirango barusheho kunoza no gukungahaza uwo mukino.</p>
-                            <Link to="#">
+                            <Link to="Login">
                                 <button type="submit" onClick={handleLearnMoreClick} className="w-32 text-white font-medium hover:bg-cyan-950 rounded-full text-sm px-6 py-2.5 text-center bg-blue-900">Learn More</button>
                             </Link>
                         </div>
@@ -70,7 +70,7 @@ export default function Service() {
                                 nyemvugo bikomeye bishingiye ku busizi. Mu buryo bwihariye mbere y'Ubukoloni, U Rwanda rwateje
                                 imbere Ibitekerezo (ubusizi n'umuziki gakondo), Ubucurabwenge (ibisekuruza by'abami bikunze
                                 kuvugwa mu mihango y'iyimikwa), Ibisigo (Ibisigo by'i Bwami).</p>
-                            <Link to="#">
+                            <Link to="Login">
                                 <button type="submit" onClick={handleLearnMoreClick} className="w-32 text-white font-medium hover:bg-cyan-950 rounded-full text-sm px-6 py-2.5 text-center bg-blue-900">Learn More</button>
                             </Link>
                         </div>

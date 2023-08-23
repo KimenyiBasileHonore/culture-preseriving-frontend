@@ -33,6 +33,7 @@ export default function Isomero() {
   const ExpandedBox = ({ boxData }) => {
     const { title, details } = boxData;
     const formattedDetails = details.replace(/\\n/g, '\n'); // Convert stored \n to actual line breaks
+    
   
     return (
       <div className="expanded-box">
@@ -67,7 +68,9 @@ export default function Isomero() {
       <div>
         <section className="text-gray-600 body-font">
           <div className="container">
-          <h1 className="flex section-heading">Ibyivugo</h1>
+          <h1 className="flex section-heading">
+      <span className="highlight">IBYI</span>  <span className="accent">VUGO</span>
+    </h1>
             <p>
             Ibyivugo ni nk' ibisingizo bisingiza intwari ku rugamba, bigasingiza intwaro, zikarata n'ubutwari bwabo. Ibyivugo by' imyato, byabaga ari ibyivugo birebire kandi bikagira ibice bitaga "IMYATO".
             </p>

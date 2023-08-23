@@ -4,11 +4,13 @@ import './ContactForm.css';
 
 
 const ContactForm = () => {
+  const [feedbackMessage, setFeedbackMessage] = useState('');
+  const [showFeedbackMessage, setShowFeedbackMessage] = useState(false);
 
-    const handleEmailClick = () =>{
-        window.location.href = 'mailto:kimbasile23@gmail.com';
 
-    };
+  const handleEmailClick = () => {
+    window.location.href = 'mailto:kimbasile23@gmail.com';
+  };
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -24,18 +26,48 @@ const ContactForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Perform form submission or validation here
-    console.log(formData);
+    console.log('Submitting form data:', formData);
+
+    try {
+      const response = await fetch("http://localhost:4050/api/feedback/feedback", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log('Feedback submitted successfully:', responseData);
+
+        setShowFeedbackMessage(true);
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          message: ''
+        });
+      } else {
+        console.error('Error submitting feedback:', response.statusText);
+        setFeedbackMessage('An error occurred while submitting feedback.');
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+      setFeedbackMessage('An unexpected error occurred.');
+    }
   };
+
+
 
   return (
     <div className="contact-container">
-       
+
       <div className="contact-heading">
         <h1 className="contact-heading-text">Contact us</h1>
-        <p>Need to get in touch with us? Either fill out the form with your inquiry or <br/>  <button onClick={handleEmailClick} class="bg-blue-900 hover:bg-cyan-950 text-white">Email Us </button> you can also call us on :+250 783 842 055.</p>
+        <p>Need to get in touch with us? Either fill out the form with your inquiry or <br />  <button onClick={handleEmailClick} class="bg-blue-900 hover:bg-cyan-950 text-white">Email Us </button> you can also call us on :+250 783 842 055.</p>
       </div>
       <div className="contact-form">
         <section className="contact-section">
@@ -90,10 +122,18 @@ const ContactForm = () => {
                 <div className="w-32 text-white font-medium rounded-full text-sm px-6 py-2.5 text-center bg-blue-900 hover:bg-cyan-950 hover:text-white rounded py-1 px-2 rounded">
                   <button type="submit">Submit</button>
                 </div>
+                {feedbackMessage && <p className="feedback-message">{feedbackMessage}</p>}
               </form>
             </div>
           </div>
         </section>
+        {showFeedbackMessage && (
+          <div className="feedback-popup">
+            <p>Thank you for your feedback!</p>
+            <button onClick={() => setShowFeedbackMessage(false)}>Close</button>
+          </div>
+        )}
+
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ export default function Navigation() {
               </div>
               <div className="flex lg:flex lg:flex-1 lg:justify-end font-bold mr-10">
                 <Link
-                  to="Signup"
+                  to="Login"
                   className="w-32 text-white font-medium rounded-full text-sm px-6 py-2.5 text-center bg-blue-900 hover:bg-cyan-950 hover:text-white rounded py-1 px-2 rounded"
                 >
                   Login

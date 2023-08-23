@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../pages/Service.css";
-import { UilTrashAlt, UilPen } from "@iconscout/react-unicons";
+import { UilTrashAlt } from "@iconscout/react-unicons";
 import axios from "axios";
 
 export default function Inbox() {
@@ -14,8 +14,19 @@ export default function Inbox() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:4050/api/user/all"); // Use the appropriate route to fetch all users
+      const response = await axios.get("http://localhost:4050/api/user/all"); 
+      console.log(response.data)// Use the appropriate route to fetch all users
       setUsers(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const deleteUser = async (userId) => {
+    try {
+      await axios.delete(`http://localhost:4050/api/user/delete/${userId}`);
+
+      // After deleting, update the user list
+      fetchUsers();
     } catch (error) {
       console.error(error);
     }
@@ -40,14 +51,15 @@ export default function Inbox() {
           {users.map((user) => (
             <tr key={user._id}>
               <td className="p-2 border border-gray-600">{user.username}</td>
-              <td className="p-2 border border-gray-600">{user.fullName}</td>
+              <td className="p-2 border border-gray-600">{user.fullname}</td>
               <td className="p-2 border border-gray-600">{user.email}</td>
               <td className="p-2 border border-gray-600">**********</td>
-              <td className="p-2 border border-gray-600">{user.phoneNumber}</td>
+              <td className="p-2 border border-gray-600">{user.phone}</td>
               <td className="p-2 border border-gray-600">
                 {/* Icons for Delete and Update actions */}
-                <UilTrashAlt className="text-red-500 mr-2 cursor-pointer" size={24} />
-                <UilPen className="text-blue-500 cursor-pointer" size={24} />
+                <UilTrashAlt className="text-red-500 mr-2 cursor-pointer" size={24}
+                onClick={() => deleteUser(user._id)} />
+                {/* <UilPen className="text-blue-500 cursor-pointer" size={24} /> */}
               </td>
             </tr>
           ))}

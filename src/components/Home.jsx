@@ -17,16 +17,16 @@ export default function Home() {
                         “Umuco dusangiye uraturanga, <br />
                         Ururimi rwacu rukaduhuza”
                     </p>
-                    <Link to="/Dashboard">
+                    <Link to="/Signup">
                         <button className="text-center border-4 w-28 h-19.9 bg-brown text-brown mt-6 font-bold rounded-lg hover:bg-cyan-950 hover:text-white" style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }}>
                             Signup
                         </button>
                     </Link>
-                    <Link to="/Admdash">
+                    {/* <Link to="/Admdash">
                         <button className="text-center border-4 w-28 h-19.9 bg-brown text-brown mt-6 font-bold rounded-lg hover:bg-cyan-950 hover:text-white" style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }}>
                         Admindashboard
                         </button>
-                    </Link>
+                    </Link> */}
                 </div>
 
             </div>

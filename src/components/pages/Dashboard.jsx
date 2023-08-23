@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect,useMemo } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import "./Dashboard.css";
 import logo from "../../imgs/logo.png";
 import Firstpage from '../Services/Firstpage';
@@ -7,24 +7,45 @@ import Ikenshavugo from '../Services/Ikenshavugo';
 import Ibisakuzo from "../Services/Ibisakuzo";
 import Incamarenga from "../Services/Incamarenga";
 import Isomero from "../Services/Isomero";
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Dashboard() {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredItems, setFilteredItems] = useState([]);
- // Combine the content from different JSX files into a single array
- const allItems = useMemo(
-  () => [
-    "Imigani migufi",
-    "Ikenshavugo",
-    "Incamarenga",
-    "Ibisakuzo",
-    "Isomero",
-    // Add more items from other JSX files if needed
-  ],
-  [] // Empty dependency array since there are no dependencies
-);
+  const [allItems, setAllItems] = useState([]);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    try {
+      // Perform logout action (clear token, etc.)
+      localStorage.removeItem('accessToken'); // Clear the token
+      navigate('/');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
+
+  
+  useEffect(() => {
+    // Check if the user is authenticated on component mount
+    const checkAuthentication = async () => {
+      try {
+        const response = await fetch('/check-auth'); // Send request to your backend
+        const data = await response.json();
+
+        if (!data.isAuthenticated) {
+          navigate('/Login'); // Redirect to login if not authenticated
+        }
+      } catch (error) {
+        console.error('Authentication check error:', error);
+      }
+    };
+    checkAuthentication();
+  }, [navigate]);
+
 useEffect(() => {
   if (searchQuery) {
     const filtered = allItems.filter((item) =>
@@ -70,11 +91,11 @@ useEffect(() => {
         <div className="p-4 ml-2">
           <input
             className="w-full bg-white-800 text-black rounded-full block py-2 px-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            type="text"
-            placeholder="Search"
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
+          type="text"
+          placeholder="Search "
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+/>
         </div>
 
         <ul className="space-y-2">
@@ -120,10 +141,10 @@ useEffect(() => {
             Imigani migufi
           </li>
           <li
-            className={`py-2 px-6 hover:bg-gray-300 toto  cursor-pointer ${selectedItem === "Ikenshavugo" ? "bg-gray-300" : ""}`}
-            onClick={() => handleItemClick("Ikenshavugo")}
+            className={`py-2 px-6 hover:bg-gray-300 toto  cursor-pointer ${selectedItem === "Ikenshamvugo" ? "bg-gray-300" : ""}`}
+            onClick={() => handleItemClick("Ikenshamvugo")}
           >
-            Ikenshavugo
+            Ikenshamvugo
           </li>
           <li
             className={`py-2 px-6 hover:bg-gray-300 toto  cursor-pointer ${selectedItem === "Incamarenga" ? "bg-gray-300" : ""}`}
@@ -147,9 +168,9 @@ useEffect(() => {
         {/* Rest of the sidebar content */}
         <div className="flex-grow"></div>
 
-        <div className="p-4 mt-44 ml-4">
+        <div className="p-4 mt-38 ">
           <button className="bg-blue-900 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded"
-          // onClick={handleLogout}
+        onClick={handleLogout}
           >
             Log Out
           </button>
@@ -176,17 +197,17 @@ useEffect(() => {
             <section className="text-gray-600 body-font">
               <div className="container px-5 py-24 mx-auto">
                 <div className="flex flex-wrap -m-4">
-                  <Imigani />
+                  <Imigani searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
 
                 </div>
               </div>
             </section>
           )}
-          {selectedItem === "Ikenshavugo" && (
+          {selectedItem === "Ikenshamvugo" && (
             <section className="text-gray-600  body-font">
               <div className="container px-5 py-24 mx-auto">
                 <div className="flex flex-wrap -m-4">
-                  <Ikenshavugo />
+                  <Ikenshavugo/>
 
                 </div>
               </div>
@@ -196,7 +217,7 @@ useEffect(() => {
             <section className="text-gray-600 body-font">
               <div className="container px-5 py-24 mx-auto">
                 <div className="flex flex-wrap -m-4">
-                  <Incamarenga />
+                  <Incamarenga searchQuery={searchQuery}/>
 
                 </div>
               </div>
@@ -216,7 +237,7 @@ useEffect(() => {
             <section className="text-gray-600 body-font">
               <div className="container px-5 py-24 mx-auto">
                 <div className="flex flex-wrap -m-4">
-                  <Isomero />
+                  <Isomero searchQuery={searchQuery} />
 
                 </div>
               </div>

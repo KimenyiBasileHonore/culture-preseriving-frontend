@@ -59,12 +59,16 @@
 .header-content {
   display: flex;
   align-items: center;
-  background-color:  #f2f2f2;
+  background-color: #3498db; /* Starting color */
+  background-image: linear-gradient(to bottom, #5eb6f7, #3498db); /* Gradient effect */
+  transition: background-color 0.3s ease; /* Smooth transition */
 }
 
 .header-content:hover {
-  background-color: #e6e6e6;
+  background-color: #1e87d6; /* Hover color */
+  background-image: linear-gradient(to bottom, #439ee6, #1e87d6); /* Hover gradient effect */
 }
+
 
 .arrow {
   display: inline-block;
@@ -98,4 +102,28 @@
   text-align: center;
   margin-bottom: 20px;
   font-family: 'Times New Roman', Times, serif;
+}
+
+/* Add this to your existing CSS */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+.header-content {
+  display: flex;
+  align-items: center;
+  background-color: #3498db;
+  background-image: linear-gradient(to bottom, #5eb6f7, #3498db);
+  transition: background-color 0.3s ease;
+}
+
+.header-content:hover {
+  background-color: #1e87d6;
+  background-image: linear-gradient(to bottom, #439ee6, #1e87d6);
+}
+
+.title-font {
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  color: #141414;
+  margin-bottom: 0.75rem;
 }

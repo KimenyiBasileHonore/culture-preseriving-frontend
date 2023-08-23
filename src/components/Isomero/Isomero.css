@@ -112,3 +112,26 @@
     /* background-color: red; */
     margin-right: 80rem;
   }
+
+
+  .section-heading {
+    font-family: 'Arial', sans-serif;
+    font-size: 2.5rem;
+    color: #333; /* Adjust the color as needed */
+    text-align: center;
+    margin: 0 auto;
+    padding: 1rem;
+    border-bottom: 2px solid #ccc; /* Add a subtle underline */
+  }
+  
+  .highlight {
+    color: blue; /* Choose a color that stands out */
+  }
+  
+  .accent {
+    color: #66cc66; /* Choose a different color for the accent */
+  }
+  
+.spacer {
+  margin: 0 0.25rem; /* Adjust the space as needed */
+}

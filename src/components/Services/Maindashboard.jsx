@@ -1,149 +1,91 @@
-import React, { useRef, useEffect, useState } from "react";
-import ApexCharts from "apexcharts";
+import React, { useEffect, useState,useRef } from "react";
 import axios from "axios";
-import "../pages/Service.css";
+// import html2pdf from "html2pdf.js";
+import html2canvas from "html2canvas"; 
+import jsPDF from "jspdf";
+import Chart from "../Services/Chart";
+import Graphchart from "../Services/Graphchart";
+import "./Maindashboard.css"; 
+import { useReactToPrint } from 'react-to-print';
+
+
 
 export default function Maindashboard() {
-  const chartRefs = useRef([]);
   const [registeredUsersCount, setRegisteredUsersCount] = useState(0);
+  const [feedbackCount, setFeedbackCount] = useState(0);
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch data for the "Registration" chart
-        const response = await axios.get("http://localhost:4050/api/user/all");
-        const count = response.data.count;
-        setRegisteredUsersCount(count);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const charts = [
-      {
-        series: [registeredUsersCount],
-        chart: {
-          height: 350,
-          type: "radialBar",
-        },
-        plotOptions: {
-          radialBar: {
-            hollow: {
-              size: "70%",
-            },
-          },
-        },
-        labels: ["Registration"],
-      },
-      // Add more charts here with different data as needed
-      // ...
-    ];
+  const fetchData = async () => {
+    try {
+      const userResponse = await axios.get("http://localhost:4050/api/user/all");
+      const feedbackResponse = await axios.get("http://localhost:4050/api/feedback/feedback");
 
-    const chartsInstances = charts.map((options, index) => {
-      const chart = new ApexCharts(chartRefs.current[index], options);
-      chart.render();
-      return chart;
-    });
+      if (userResponse.data.data) {
+        const users = userResponse.data.data;
+        setRegisteredUsersCount(users.filter(user => user.role === "user").length);
+      }
 
-    return () => {
-      // Cleanup the charts when the component unmounts
-      chartsInstances.forEach((chart) => chart.destroy());
-    };
-  }, [registeredUsersCount]);
+      if (feedbackResponse.data) {
+        const feedbackData = feedbackResponse.data;
+        setFeedbackCount(feedbackData.length);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
+  
+  // const pdfRef = useRef();
+  // const downloadPDF = () => {
+  //   const input = pdfRef.current;
+  
+  //   // Capture the entire content as an image
+  //   html2canvas(input).then((canvas) => {
+  //     const imgData = canvas.toDataURL('image/png');
+  //     const pdf = new jsPDF('p', 'mm', 'a4', true);
+  
+  //     // Add the entire captured image to the PDF
+  //     pdf.addImage(imgData, 'PNG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+  
+  //     // Save the PDF
+  //     pdf.save('Statistic Report.pdf');
+  //   });
+  // };
+  
+  
+  
   return (
     <div className="mt-16">
-      <h2 className="text-2xl font-bold mb-4">Statistics</h2>
-      <div className="grid grid-cols-3 gap-4">
-        {Array.from({ length: 3 }).map((_, index) => (
-          <div key={index} className="options" ref={(el) => (chartRefs.current[index] = el)}></div>
-        ))}
+      <div className="dashboard-container">
+        <div className="pdf-button-container">
+          <button className="pdf-button" onClick={handlePrint}>Generate PDF</button>
+        </div>
+        {/* Content you want to print */}
+        <div className="printable-content" ref={componentRef}>
+          <h2 className="dashboard-title mt-16 text-2xl font-bold text-gray-700">Culture Preserving Statistics</h2>
+          <div className="flex gap-48 mt-4">
+            <div className="card bg-gradient-to-br from-yellow-300 to-red-500 p-4 rounded shadow-md flex-grow flex flex-col justify-center" style={{ height: '100px' }}>
+              <h3 className="card-title text-lg font-bold mb-2 text-black text-center">Registered Users</h3>
+              <p className="card-number text-xl font-bold text-black text-center">{registeredUsersCount}</p>
+            </div>
+            <div className="card bg-gradient-to-br from-yellow-300 to-red-500 p-4 rounded shadow-md flex-grow flex flex-col justify-center" style={{ height: '100px' }}>
+              <h3 className="card-title text-lg font-bold mb-2 text-black text-center">Feedback Messages</h3>
+              <p className="card-number text-xl font-bold text-black text-center">{feedbackCount}</p>
+            </div>
+          </div>
+          <br/><br/>
+          <Chart />
+          <br/><br/>
+          <Graphchart/>
+        </div>
       </div>
     </div>
   );
-}
-
-// import React, { useRef, useEffect } from "react";
-// import ApexCharts from "apexcharts";
-// import "../pages/Service.css";
-
-// export default function Maindashboard() {
-//   const chartRefs = useRef([]);
-
-//   useEffect(() => {
-//     const charts = [
-//       {
-//         series: [70],
-//         chart: {
-//           height: 350,
-//           type: "radialBar",
-//         },
-//         plotOptions: {
-//           radialBar: {
-//             hollow: {
-//               size: "70%",
-//             },
-//           },
-//         },
-//         labels: ["Registration"],
-//       },
-//       // Add more charts here with different data as needed
-//       {
-//         series: [50],
-//         chart: {
-//           height: 350,
-//           type: "radialBar",
-//         },
-//         plotOptions: {
-//           radialBar: {
-//             hollow: {
-//               size: "70%",
-//             },
-//           },
-//         },
-//         labels: ["Most view"],
-//       },
-//       {
-//         series: [30],
-//         chart: {
-//           height: 350,
-//           type: "radialBar",
-//         },
-//         plotOptions: {
-//           radialBar: {
-//             hollow: {
-//               size: "70%",
-//             },
-//           },
-//         },
-//         labels: ["Most search"],
-//       },
-//     ];
-
-//     const chartsInstances = charts.map((options, index) => {
-//       const chart = new ApexCharts(chartRefs.current[index], options);
-//       chart.render();
-//       return chart;
-//     });
-
-//     return () => {
-//       // Cleanup the charts when the component unmounts
-//       chartsInstances.forEach((chart) => chart.destroy());
-//     };
-//   }, []);
-
-//   return (
-//     <div className="mt-16">
-//       <h2 className="text-2xl font-bold mb-4">Statistics</h2>
-//       <div className="grid grid-cols-3 gap-4">
-//         {Array.from({ length: 3 }).map((_, index) => (
-//           <div key={index} className="options" ref={(el) => (chartRefs.current[index] = el)}></div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
+  }  

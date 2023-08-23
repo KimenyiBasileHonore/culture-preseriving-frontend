@@ -26,7 +26,7 @@ function Ikenshkumwami() {
 
   const fetchUmwamiList = async () => {
     try {
-      const response = await fetch("http://localhost:4050/api/umwami/umwami"); // Use the correct backend API URL here
+      const response = await fetch("http://localhost:4050/api/umwami/umwami");
       const data = await response.json();
       setUmwamiList(data);
       setFlips(Array(data.length).fill(false));
@@ -44,11 +44,14 @@ function Ikenshkumwami() {
       <div className={`collapsible ${isOpen ? 'open' : ''}`}>
         <div className="collapsible-header" onClick={toggleCollapsible}>
           <div className="header-content">
-            <h1 class="title-font sm:text-2xl   text-xl font-medium text-gray-900 mb-3">Ku bijyanye n’umwami</h1>
+            <h1 class="title-font sm:text-2xl text-xl font-semibold text-gray-900 mb-3">
+              Ku bijyanye n’umwami
+            </h1>
+
             <span className={`arrow ${isOpen ? 'up' : 'down'}`}></span>
           </div>
         </div>
-        <hr /><br /> 
+        <hr /><br />
         {isOpen && (
           <div className="marg flex flex-wrap collapsible-content -m-4">
             {umwamiList.map((item, index) => (
@@ -125,7 +128,7 @@ export default Ikenshkumwami;
 //                         <span className={`arrow ${isOpen ? 'up' : 'down'}`}></span>
 //                     </div>
 //                     </div>
-//                     <hr /><br /> 
+//                     <hr /><br />
 //                     {isOpen && (
 //                         <div className=" marg flex flex-wrap -m-4 collapsible-content">
 //                             <ReactCardFlip

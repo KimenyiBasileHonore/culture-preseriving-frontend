@@ -1,52 +1,52 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import "../pages/Service.css";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import '../pages/imigani.css';
 
-export default function Imigani() {
+export default function Imigani({searchQuery,setSearchQuery}) {
   const [contentList, setContentList] = useState([]);
+  
 
   useEffect(() => {
-    // Make an API call to fetch the data from the backend
-    axios.get("http://localhost:4050/api/imigani/imigani")
+    axios
+      .get('http://localhost:4050/api/imigani/imigani')
       .then((response) => {
         setContentList(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       });
   }, []);
 
+  const filteredContent = contentList.filter((contentObject) =>
+    contentObject.content.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="mt-16">
-      <h1 className="section-heading">IMIGANI MIGUFI</h1>
-      <hr />
-      <br />
-      <p>
+    <div className="imigani-container ">
+      <h1 className="section-heading mt-24">IMIGANI MIGUFI</h1>
+      <p> <p>
         Nkuko amateka y’ubuvanganzo nyarwanda abigaragaza, umugani n’ipfundo
         ry’amagambo atonze neza,Gacamigani yakagiriyemo ihame ridutoza gukora iki
         cyangwa se kudakora kiriya.Mbese muri make umugani ni umwanzuro
         w’amarenga y’intekerezo. Umugani uvuga ukuri, ariko muri kamere yawo
         ntabwo wo uba ari ukuri. Zimwe mu ngero z imigani migufi:
-      </p>{" "}
-      <br />
+      </p></p>
+      <hr className="section-divider" />
+      
       <ul className="content-list">
-        {contentList.map((contentObject, index) => (
+        {filteredContent.map((contentObject, index) => (
           <li key={index} className="content-item">
-            {contentObject.content} {/* Render the 'content' property */}
+            {contentObject.content}
           </li>
         ))}
       </ul>
-
-      {/* <ul className="content-list">
-        {contentList.map((content, index) => (
-          <li key={index} className="content-item">
-            {content}
-          </li>
-        ))}
-      </ul> */}
+    </div>
     </div>
   );
 }
+
+
 
 
 // import React from "react";

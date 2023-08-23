@@ -4,11 +4,10 @@ import "../pages/Service.css";
 
 export default function Feedback() {
   const [feedbackList, setFeedbackList] = useState([]);
-  
-  
+
   useEffect(() => {
     // Fetch feedback data from the backend API
-    axios.get("/feedback/all")
+    axios.get("http://localhost:4050/api/feedback/feedback")
       .then((response) => {
         setFeedbackList(response.data);
       })
@@ -17,26 +16,34 @@ export default function Feedback() {
       });
   }, []);
 
-  
-
-  const markFeedbackAsSeen = (id) => {
-    const updatedFeedbackList = feedbackList.map((feedback) => {
-      if (feedback.id === id) {
-        return { ...feedback, seen: true };
-      }
-      return feedback;
-    });
-    setFeedbackList(updatedFeedbackList);
+  const markFeedbackAsSeen = async (id) => {
+    try {
+      await axios.put(`http://localhost:4050/api/feedback/feedback/${id}/mark-seen`);
+      const updatedFeedbackList = feedbackList.map((feedback) => {
+        if (feedback._id === id) {
+          return { ...feedback, isSeen: true };
+        }
+        return feedback;
+      });
+      setFeedbackList(updatedFeedbackList);
+    } catch (error) {
+      console.error("Error marking feedback as seen:", error);
+    }
   };
 
-  const markFeedbackAsUnseen = (id) => {
-    const updatedFeedbackList = feedbackList.map((feedback) => {
-      if (feedback.id === id) {
-        return { ...feedback, seen: false };
-      }
-      return feedback;
-    });
-    setFeedbackList(updatedFeedbackList);
+  const markFeedbackAsUnseen = async (id) => {
+    try {
+      await axios.put(`http://localhost:4050/api/feedback/feedback/${id}/mark-unseen`);
+      const updatedFeedbackList = feedbackList.map((feedback) => {
+        if (feedback._id === id) {
+          return { ...feedback, isSeen: false };
+        }
+        return feedback;
+      });
+      setFeedbackList(updatedFeedbackList);
+    } catch (error) {
+      console.error("Error marking feedback as unseen:", error);
+    }
   };
 
   return (
@@ -49,6 +56,7 @@ export default function Feedback() {
             <th className="p-2 font-semibold border border-gray-800">Last Name</th>
             <th className="p-2 font-semibold border border-gray-800">Email</th>
             <th className="p-2 font-semibold border border-gray-800">Message</th>
+            <th className="p-2 font-semibold border border-gray-800">Submission Date</th>
             <th className="p-2 font-semibold border border-gray-800">Actions</th>
           </tr>
         </thead>
@@ -66,18 +74,19 @@ export default function Feedback() {
                   readOnly
                 />
               </td>
+              <td className="p-2 border border-gray-600">{new Date(feedback.submissionDate).toLocaleString()}</td>
               <td className="p-2 border border-gray-600">
-                {!feedback.seen ? (
+              {!feedback.isSeen ? (
                   <button
                     className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded mr-2"
-                    onClick={() => markFeedbackAsSeen(feedback.id)}
+                    onClick={() => markFeedbackAsSeen(feedback._id)}
                   >
                     Mark Seen
                   </button>
                 ) : (
                   <button
                     className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mr-2"
-                    onClick={() => markFeedbackAsUnseen(feedback.id)}
+                    onClick={() => markFeedbackAsUnseen(feedback._id)}
                   >
                     Mark Unseen
                   </button>

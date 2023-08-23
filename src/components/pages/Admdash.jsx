@@ -9,11 +9,23 @@ import Ikenshavugooo from "../Admin/Ikenshavugooo";
 import Imiganiii from "../Admin/Imiganiii";
 import Incamarengaaa from "../Admin/Incamarengaaa";
 import Isomerooo from "../Admin/Isomerooo";
+import Report from "../Admin/Report";
+import { useNavigate } from 'react-router-dom';
+
+
+// import {  } from '@react-navigation/native';
 
 export default function Dashboard() {
-  const [searchQuery, setSearchQuery] = useState('');
+
   const [selectedItem, setSelectedItem] = useState("Dashboard"); // Set "Dashboard" as the default selected item
   const mainContentRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    
+    navigate('/');
+  };
+
 
   useEffect(() => {
     // Scroll to the main content when the component mounts
@@ -25,9 +37,7 @@ export default function Dashboard() {
     }
   }, []);
 
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
+  
 
   const handleItemClick = (item) => {
     setSelectedItem(item);
@@ -39,11 +49,13 @@ export default function Dashboard() {
     }
   };
 
+ 
+
 
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <div className="fixed w-1/4 h-screen bg-blue-900">
+      <div className="fixed w-1/4 h-screen bg-black">
         {/* Sidebar content */}
         <div>
           <img
@@ -53,7 +65,7 @@ export default function Dashboard() {
           />
           <h1 className="tet h-8 mt-3 ml-4 font-bold">RCP</h1>
         </div>
-        <div className="p-4 ml-2">
+        {/* <div className="p-4 ml-2">
           <input
             className="w-full bg-white-800 text-black rounded-full block py-2 px-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
             type="text"
@@ -61,9 +73,9 @@ export default function Dashboard() {
             value={searchQuery}
             onChange={handleSearchChange}
           />
-        </div>
+        </div> */}
 
-        <ul className="py-4 ml-2">
+        <ul className="py-4 ml-2 mt-16">
           <li
             className={`py-2 px-6 text-white hover:bg-gray-300 cursor-pointer ${selectedItem === "Home" ? "bg-gray-300" : ""}`}
             onClick={() => handleItemClick("Dashboard")}
@@ -81,6 +93,12 @@ export default function Dashboard() {
             onClick={() => handleItemClick("Feedback")}
           >
             Feedback
+          </li>
+          <li
+            className={`py-2 px-6 text-white hover:bg-gray-300 cursor-pointer ${selectedItem === "Report" ? "bg-gray-300" : ""}`}
+            onClick={() => handleItemClick("Report")}
+          >
+            Report
           </li>
           <li
             className={`py-2 px-6 text-white hover:bg-gray-300 cursor-pointer ${selectedItem === "Imigani migufi" ? "bg-gray-300" : ""}`}
@@ -119,7 +137,9 @@ export default function Dashboard() {
         <div className="flex-grow"></div>
 
         <div className="p-4  ml-4">
-          <button className="bg-blue-900 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded">
+          <button className="bg-blue-900 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded"
+          onClick={handleLogout}
+          >
             Log Out
           </button>
         </div>
@@ -156,6 +176,16 @@ export default function Dashboard() {
               <div className="container px-5 py-24 mx-auto">
                 <div className="flex flex-wrap -m-4">
                   <Feedback />
+
+                </div>
+              </div>
+            </section>
+          )}
+           {selectedItem === "Report" && (
+            <section className="text-gray-600  body-font">
+              <div className="container px-5 py-24 mx-auto">
+                <div className="flex flex-wrap -m-4">
+                  <Report />
 
                 </div>
               </div>

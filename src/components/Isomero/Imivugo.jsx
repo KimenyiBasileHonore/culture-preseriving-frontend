@@ -73,10 +73,12 @@ export default function Imiganimiremire() {
       <div>
         <section className="text-gray-600 body-font">
           <div className="container">
-          <h1 className="flex section-heading">Imivugo</h1>
-            <p>
+          <h1 className="flex section-heading">
+      <span className="highlight">IMI</span>  <span className="accent">VUGO</span>
+    </h1>
+            {/* <p>
               Ibyivugo ni nk' ibisingizo bisingiza intwari ku rugamba, bigasingiza intwaro, zikarata n'ubutwari bwabo...
-            </p>
+            </p> */}
             <br />
             <div>
               <div className="mt-16">

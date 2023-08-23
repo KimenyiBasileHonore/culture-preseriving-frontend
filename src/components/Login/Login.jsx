@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { GrFacebookOption } from "react-icons/gr";
-import { FcGoogle } from "react-icons/fc";
-import axios from "axios";
+// import { GrFacebookOption } from "react-icons/gr";
+// import { FcGoogle } from "react-icons/fc";
+// import axios from "axios";
 import "./Login.css";
 
 
@@ -11,8 +11,9 @@ import "./Login.css";
 
 export default function Login() {
 
-  const [email, setEmail] = useState("");
+  const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -20,42 +21,62 @@ export default function Login() {
 
     // Create an object with the user's login credentials
     const userCredentials = {
-      email,
+      account,
       password,
     };
 
     try {
-      // Send a POST request to the login API endpoint
-      const response = await axios.post("http://localhost:4050/api/user/login", userCredentials);
+      console.log(userCredentials);
+      const response = await fetch("http://localhost:4050/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userCredentials),
+      });
 
-      // Handle the successful login response
-      console.log(response.data); // The response will contain the JWT token and other data
+      // Check if the response status is OK (200)
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData); // Customize the handling as needed
+        console.log('hello');
+        setAccount("");
+        setPassword("");
 
-      setEmail("");
-      setPassword("");
-      // You can handle the login response according to your needs, e.g., save the token to local storage and redirect to the dashboard page
-      // For example:
-      localStorage.setItem("accessToken", response.data.accessToken);
-      // Redirect to the dashboard page after successful login
-      // Make sure to import 'useHistory' from 'react-router-dom'
-      // useHistory().push("/dashboard");
-      navigate("/dashboard");
+        // Save the token to local storage
+        localStorage.setItem("accessToken", responseData.accessToken);
+
+        // Redirect to the dashboard page after successful login
+        if(responseData.role==='admin')
+        {
+          navigate("/Admdash");
+        }
+        else {
+          if(responseData.role==='user')
+        {
+          navigate("/Dashboard");
+        }
+        }
+        
+
+      } 
+      else {
+        // Handle different error scenarios based on response status
+        if (response.status === 401) {
+          setErrorMessage("Password doesn't match.");
+        } else if (response.status === 404) {
+          setErrorMessage("We couldn't find a user with that information. Please ensure the user is registered or try again with correct details");
+        } else {
+          setErrorMessage("An error occurred. Please try again later.");
+        }
+      }
     } catch (error) {
-      // Handle login errors
-      console.error(error); // You can customize the error handling according to your needs
+      console.error(error); // Customize the error handling as needed
     }
   };
-  const handleForgotPassword = () => {
-    // Navigate to the Forgot Password page
-    navigate("/forgot-password");
-  };
 
-  const handleResetPassword = () => {
-    // Replace 'your_reset_token_here' with the actual reset token received in the email link
-    const resetToken = "your_reset_token_here";
-    // Navigate to the Reset Password page with the reset token as a parameter
-    navigate(`/reset-password/${resetToken}`);
-  };
+
+  
 
 
   return (
@@ -79,6 +100,9 @@ export default function Login() {
                     class="bg-gray-50 border border-gray-300 sm:text-sm rounded-full block w-full p-2.5 outline-none "
                     placeholder="name@gmail.com"
                     required=""
+                    value={account}
+                    onChange={(e) => setAccount(e.target.value)}
+                    
                   />
                 </div>
                 <div>
@@ -89,6 +113,8 @@ export default function Login() {
                     placeholder="••••••••"
                     class="bg-gray-50 border border-gray-300 sm:text-sm rounded-full block w-full p-2.5 outline-none"
                     required=""
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 {/* <div class="flex justify-center align-baseline mt-3 mb-3">
@@ -116,6 +142,7 @@ export default function Login() {
                   </label>
                   <hr />
                 </div> */}
+                {errorMessage && <p className="text-red-500">{errorMessage}</p>}
                 <div class="flex gap-5">
                   <Link to="/Signup">
                     <button
