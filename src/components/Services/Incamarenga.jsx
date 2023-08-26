@@ -3,6 +3,7 @@ import "../pages/Service.css";
 
 export default function Incamarenga({searchQuery}) {
   const [sections, setSections] = useState([]);
+  const [viewCount, setViewCount] = useState(0);
 
   useEffect(() => {
     // Fetch data from the backend API
@@ -10,6 +11,12 @@ export default function Incamarenga({searchQuery}) {
       .then((response) => response.json())
       .then((data) => setSections(data))
       .catch((error) => console.error("Error fetching data:", error));
+
+      const storedViewCount = localStorage.getItem('incamarengaViewCount'); // Use a unique key for Ikenshamvugo
+      const updatedViewCount = storedViewCount ? parseInt(storedViewCount) + 1 : 1;
+      setViewCount(updatedViewCount);
+      localStorage.setItem('incamarengaViewCount', updatedViewCount.toString()); // Use the same unique key here
+
   }, []);
 
   const toggleCollapsible = (index) => {

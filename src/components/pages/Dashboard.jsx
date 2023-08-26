@@ -16,6 +16,15 @@ export default function Dashboard() {
   const [filteredItems, setFilteredItems] = useState([]);
   const [allItems, setAllItems] = useState([]);
   const navigate = useNavigate();
+  const [viewCounts, setViewCounts] = useState({
+    "Imigani migufi": 0,
+    "Ikenshamvugo": 0,
+    "Incamarenga": 0,
+    "Ibisakuzo": 0,
+    "Isomero": 0,
+    // ... other content pages
+  });
+
 
   const handleLogout = () => {
     try {
@@ -28,7 +37,7 @@ export default function Dashboard() {
   };
 
 
-  
+
   useEffect(() => {
     // Check if the user is authenticated on component mount
     const checkAuthentication = async () => {
@@ -46,16 +55,16 @@ export default function Dashboard() {
     checkAuthentication();
   }, [navigate]);
 
-useEffect(() => {
-  if (searchQuery) {
-    const filtered = allItems.filter((item) =>
-      item.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredItems(filtered);
-  } else {
-    setFilteredItems([]); // Set to an empty array when there's no search query
-  }
-}, [searchQuery, allItems]);
+  useEffect(() => {
+    if (searchQuery) {
+      const filtered = allItems.filter((item) =>
+        item.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredItems(filtered);
+    } else {
+      setFilteredItems([]); // Set to an empty array when there's no search query
+    }
+  }, [searchQuery, allItems]);
 
 
 
@@ -69,6 +78,33 @@ useEffect(() => {
         block: "start",
       });
     }
+    if (item === "Imigani migufi") {
+      setViewCounts((prevViewCounts) => ({
+        ...prevViewCounts,
+        [item]: prevViewCounts[item] + 1,
+      }));
+    } else if (item === "Ikenshamvugo") {
+      setViewCounts((prevViewCounts) => ({
+        ...prevViewCounts,
+        [item]: prevViewCounts[item] + 1,
+      }));
+    } else if (item === "Incamarenga") {
+      setViewCounts((prevViewCounts) => ({
+        ...prevViewCounts,
+        [item]: prevViewCounts[item] + 1,
+      }));
+    } else if (item === "Ibisakuzo") {
+      setViewCounts((prevViewCounts) => ({
+        ...prevViewCounts,
+        [item]: prevViewCounts[item] + 1,
+      }));
+    } else if (item === "Isomero") {
+      setViewCounts((prevViewCounts) => ({
+        ...prevViewCounts,
+        [item]: prevViewCounts[item] + 1,
+      }));
+    }
+
   };
 
   const handleSearchChange = (e) => {
@@ -91,25 +127,25 @@ useEffect(() => {
         <div className="p-4 ml-2">
           <input
             className="w-full bg-white-800 text-black rounded-full block py-2 px-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          type="text"
-          placeholder="Search "
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-/>
+            type="text"
+            placeholder="Search "
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </div>
 
         <ul className="space-y-2">
-  {filteredItems.map((item) => (
-    <button
-      key={item}
-      className={`w-full py-2 px-6 hover:bg-gray-300 toto cursor-pointer ${selectedItem === item ? "bg-gray-300" : ""
-        }`}
-      onClick={() => handleItemClick(item)}
-    >
-      {item}
-    </button>
-  ))}
-</ul>
+          {filteredItems.map((item) => (
+            <button
+              key={item}
+              className={`w-full py-2 px-6 hover:bg-gray-300 toto cursor-pointer ${selectedItem === item ? "bg-gray-300" : ""
+                }`}
+              onClick={() => handleItemClick(item)}
+            >
+              {item}
+            </button>
+          ))}
+        </ul>
 
 
         <ul className="space-y-2">
@@ -170,7 +206,7 @@ useEffect(() => {
 
         <div className="p-4 mt-38 ">
           <button className="bg-blue-900 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded"
-        onClick={handleLogout}
+            onClick={handleLogout}
           >
             Log Out
           </button>
@@ -197,7 +233,7 @@ useEffect(() => {
             <section className="text-gray-600 body-font">
               <div className="container px-5 py-24 mx-auto">
                 <div className="flex flex-wrap -m-4">
-                  <Imigani searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+                  <Imigani searchQuery={searchQuery} setSearchQuery={setSearchQuery} viewCount={viewCounts["Imigani migufi"]} />
 
                 </div>
               </div>
@@ -207,7 +243,7 @@ useEffect(() => {
             <section className="text-gray-600  body-font">
               <div className="container px-5 py-24 mx-auto">
                 <div className="flex flex-wrap -m-4">
-                  <Ikenshavugo/>
+                  <Ikenshavugo viewCount={viewCounts["Ikenshamvugo"]} />
 
                 </div>
               </div>
@@ -217,7 +253,7 @@ useEffect(() => {
             <section className="text-gray-600 body-font">
               <div className="container px-5 py-24 mx-auto">
                 <div className="flex flex-wrap -m-4">
-                  <Incamarenga searchQuery={searchQuery}/>
+                  <Incamarenga searchQuery={searchQuery} viewCount={viewCounts["Incamarenga"]} />
 
                 </div>
               </div>
@@ -227,7 +263,7 @@ useEffect(() => {
             <section className="text-gray-600 body-font">
               <div className="container px-5 py-24 mx-auto">
                 <div className="flex flex-wrap -m-4">
-                  <Ibisakuzo />
+                  <Ibisakuzo viewCount={viewCounts["Ibisakuzo"]} />
 
                 </div>
               </div>
@@ -237,7 +273,7 @@ useEffect(() => {
             <section className="text-gray-600 body-font">
               <div className="container px-5 py-24 mx-auto">
                 <div className="flex flex-wrap -m-4">
-                  <Isomero searchQuery={searchQuery} />
+                  <Isomero searchQuery={searchQuery} viewCount={viewCounts["Isomero"]} />
 
                 </div>
               </div>

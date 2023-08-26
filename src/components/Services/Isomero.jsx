@@ -13,12 +13,18 @@ import Inka from '../Isomero/Inka';
 export default function Isomero() {
   const [selectedBox, setSelectedBox] = useState(null);
   const [boxesIbyivugo, setBoxesIbyivugo] = useState([]);
+  const [viewCount, setViewCount] = useState(0);
 
   useEffect(() => {
     // Fetch data from the backend API using Axios
     axios.get('http://localhost:4050/api/ibyivugo/ibyivugo')
       .then(response => setBoxesIbyivugo(response.data))
       .catch(error => console.error('Error fetching data:', error));
+
+        const storedViewCount = localStorage.getItem('isomeroViewCount'); // Use a unique key for Ikenshamvugo
+        const updatedViewCount = storedViewCount ? parseInt(storedViewCount) + 1 : 1;
+        setViewCount(updatedViewCount);
+        localStorage.setItem('isomeroViewCount', updatedViewCount.toString());
   }, []);
 
   const handleBoxClick = (boxId) => {

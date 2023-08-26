@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../pages/imigani.css';
+import './Imigani.css';
 
-export default function Imigani({searchQuery,setSearchQuery}) {
+export default function Imigani({ searchQuery, setSearchQuery}) {
   const [contentList, setContentList] = useState([]);
-  
+  const [imiganiViewCount, setImiganiViewCount] = useState(0);
 
   useEffect(() => {
     axios
@@ -15,7 +15,13 @@ export default function Imigani({searchQuery,setSearchQuery}) {
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
+  
+      const storedImiganiViewCount = localStorage.getItem('imiganiViewCount');
+      const updatedImiganiViewCount = storedImiganiViewCount ? parseInt(storedImiganiViewCount) + 1 : 1;
+      setImiganiViewCount(updatedImiganiViewCount);
+      localStorage.setItem('imiganiViewCount', updatedImiganiViewCount.toString());
   }, []);
+  
 
   const filteredContent = contentList.filter((contentObject) =>
     contentObject.content.toLowerCase().includes(searchQuery.toLowerCase())
@@ -23,28 +29,127 @@ export default function Imigani({searchQuery,setSearchQuery}) {
 
   return (
     <div className="mt-16">
-    <div className="imigani-container ">
-      <h1 className="section-heading mt-24">IMIGANI MIGUFI</h1>
-      <p> <p>
-        Nkuko amateka y’ubuvanganzo nyarwanda abigaragaza, umugani n’ipfundo
-        ry’amagambo atonze neza,Gacamigani yakagiriyemo ihame ridutoza gukora iki
-        cyangwa se kudakora kiriya.Mbese muri make umugani ni umwanzuro
-        w’amarenga y’intekerezo. Umugani uvuga ukuri, ariko muri kamere yawo
-        ntabwo wo uba ari ukuri. Zimwe mu ngero z imigani migufi:
-      </p></p>
-      <hr className="section-divider" />
-      
-      <ul className="content-list">
-        {filteredContent.map((contentObject, index) => (
-          <li key={index} className="content-item">
-            {contentObject.content}
-          </li>
-        ))}
-      </ul>
-    </div>
+      <div className="imigani-container">
+        <h1 className="section-heading mt-24">IMIGANI</h1>
+        <p>
+          Nkuko amateka y’ubuvanganzo nyarwanda abigaragaza, umugani n’ipfundo
+          ry’amagambo atonze neza, Gacamigani yakagiriyemo ihame ridutoza gukora iki
+          cyangwa se kudakora kiriya. Mbese muri make umugani ni umwanzuro
+          w’amarenga y’intekerezo. Umugani uvuga ukuri, ariko muri kamere yawo
+          ntabwo wo uba ari ukuri. Zimwe mu ngero z imigani migufi:
+        </p>
+        <div className="circle-bar-container">
+        </div>
+        <hr className="section-divider" />
+        <ul className="content-list">
+          {filteredContent.map((contentObject, index) => (
+            <li key={index} className="content-item">
+              {contentObject.content}
+            </li>
+          ))}
+        </ul>
+        
+      </div>
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+// import '../pages/imigani.css';
+
+// export default function Imigani({searchQuery,setSearchQuery}) {
+//   const [contentList, setContentList] = useState([]);
+//   const [viewCount, setViewCount] = useState(0); // Add view count state
+
+  
+
+//   useEffect(() => {
+//     axios
+//       .get('http://localhost:4050/api/imigani/imigani')
+//       .then((response) => {
+//         setContentList(response.data);
+//       })
+//       .catch((error) => {
+//         console.error('Error fetching data:', error);
+//       });
+//       const storedViewCount = localStorage.getItem('viewCount');
+//     const updatedViewCount = storedViewCount ? parseInt(storedViewCount) + 1 : 1;
+//     setViewCount(updatedViewCount);
+
+//     // Store the updated view count in localStorage
+//     localStorage.setItem('viewCount', updatedViewCount.toString());
+//   }, []);
+
+//   const filteredContent = contentList.filter((contentObject) =>
+//     contentObject.content.toLowerCase().includes(searchQuery.toLowerCase())
+//   );
+
+//   return (
+//     <div className="mt-16">
+//     <div className="imigani-container ">
+//       <h1 className="section-heading mt-24">IMIGANI</h1>
+//       <p> <p>
+//         Nkuko amateka y’ubuvanganzo nyarwanda abigaragaza, umugani n’ipfundo
+//         ry’amagambo atonze neza,Gacamigani yakagiriyemo ihame ridutoza gukora iki
+//         cyangwa se kudakora kiriya.Mbese muri make umugani ni umwanzuro
+//         w’amarenga y’intekerezo. Umugani uvuga ukuri, ariko muri kamere yawo
+//         ntabwo wo uba ari ukuri. Zimwe mu ngero z imigani migufi:
+//       </p></p>
+//       <p>
+         
+//           This page has been viewed {viewCount} times.
+//         </p>
+//         <hr className="section-divider" />
+//       <hr className="section-divider" />
+      
+//       <ul className="content-list">
+//         {filteredContent.map((contentObject, index) => (
+//           <li key={index} className="content-item">
+//             {contentObject.content}
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//     </div>
+//   );
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

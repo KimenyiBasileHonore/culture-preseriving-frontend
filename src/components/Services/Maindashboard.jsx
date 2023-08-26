@@ -7,6 +7,7 @@ import Chart from "../Services/Chart";
 import Graphchart from "../Services/Graphchart";
 import "./Maindashboard.css"; 
 import { useReactToPrint } from 'react-to-print';
+import Report from "../Admin/Report";
 
 
 
@@ -66,10 +67,12 @@ export default function Maindashboard() {
       <div className="dashboard-container">
         <div className="pdf-button-container">
           <button className="pdf-button" onClick={handlePrint}>Generate PDF</button>
+          
         </div>
         {/* Content you want to print */}
         <div className="printable-content" ref={componentRef}>
-          <h2 className="dashboard-title mt-16 text-2xl font-bold text-gray-700">Culture Preserving Statistics</h2>
+          <h2 className="dashboard-title mt-16 text-2xl font-bold text-gray-700 yeye">CULTURE PRESERVING STATISTICS</h2>
+          <br/><br/>
           <div className="flex gap-48 mt-4">
             <div className="card bg-gradient-to-br from-yellow-300 to-red-500 p-4 rounded shadow-md flex-grow flex flex-col justify-center" style={{ height: '100px' }}>
               <h3 className="card-title text-lg font-bold mb-2 text-black text-center">Registered Users</h3>
@@ -84,6 +87,8 @@ export default function Maindashboard() {
           <Chart />
           <br/><br/>
           <Graphchart/>
+          <br/>
+          <Report/>
         </div>
       </div>
     </div>

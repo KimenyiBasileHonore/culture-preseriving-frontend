@@ -9,7 +9,6 @@ import Ikenshavugooo from "../Admin/Ikenshavugooo";
 import Imiganiii from "../Admin/Imiganiii";
 import Incamarengaaa from "../Admin/Incamarengaaa";
 import Isomerooo from "../Admin/Isomerooo";
-import Report from "../Admin/Report";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -94,12 +93,7 @@ export default function Dashboard() {
           >
             Feedback
           </li>
-          <li
-            className={`py-2 px-6 text-white hover:bg-gray-300 cursor-pointer ${selectedItem === "Report" ? "bg-gray-300" : ""}`}
-            onClick={() => handleItemClick("Report")}
-          >
-            Report
-          </li>
+
           <li
             className={`py-2 px-6 text-white hover:bg-gray-300 cursor-pointer ${selectedItem === "Imigani migufi" ? "bg-gray-300" : ""}`}
             onClick={() => handleItemClick("Imigani migufi")}
@@ -176,16 +170,6 @@ export default function Dashboard() {
               <div className="container px-5 py-24 mx-auto">
                 <div className="flex flex-wrap -m-4">
                   <Feedback />
-
-                </div>
-              </div>
-            </section>
-          )}
-           {selectedItem === "Report" && (
-            <section className="text-gray-600  body-font">
-              <div className="container px-5 py-24 mx-auto">
-                <div className="flex flex-wrap -m-4">
-                  <Report />
 
                 </div>
               </div>

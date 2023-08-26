@@ -1,48 +1,57 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Typography, Table, TableContainer, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material';
+import './Report.css';
+import CircleBar from '../Admin/CircleBar';
 
-export default function AnalyticsPage() {
-  const [analyticsData, setAnalyticsData] = useState([]);
+export default function Report() {
+    const [ikenshavugoViewCount, setIkenshavugoViewCount] = useState(0);
+    const [incamarengaViewCount, setIncamarengaViewCount] = useState(0);
+    const [ibisakuzoViewCount, setIbisakuzoViewCount] = useState(0);
+    const [isomeroViewCount, setIsomeroViewCount] = useState(0);
+    const [imiganiViewCount, setImiganiViewCount] = useState(0); 
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:4050/api/tracking/track")
-      .then((response) => {
-        setAnalyticsData(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching analytics data:', error);
-      });
-  }, []);
+    useEffect(() => {
+        const storedIkenshavugoViewCount = localStorage.getItem('ikenshavugoViewCount');
+        const storedIncamarengaViewCount = localStorage.getItem('incamarengaViewCount');
+        const storedIbisakuzoViewCount = localStorage.getItem('ibisakuzoViewCount');
+        const storedIsomeroViewCount = localStorage.getItem('isomeroViewCount');
+        const storedImiganiViewCount = localStorage.getItem('imiganiViewCount'); 
 
-  return (
-    <div>
-      <Typography variant="h4" gutterBottom>
-        Analytics Data
-      </Typography>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>IP Address</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Page Visited</TableCell>
-              <TableCell>Time Spent (ms)</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {analyticsData.map((row, index) => (
-              <TableRow key={index}>
-                <TableCell>{row.ip}</TableCell>
-                <TableCell>{row.timestamp}</TableCell>
-                <TableCell>{row.page}</TableCell>
-                <TableCell>{row.timeSpent}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
-  );
+        setIkenshavugoViewCount(storedIkenshavugoViewCount ? parseInt(storedIkenshavugoViewCount) : 0);
+        setIncamarengaViewCount(storedIncamarengaViewCount ? parseInt(storedIncamarengaViewCount) : 0);
+        setIbisakuzoViewCount(storedIbisakuzoViewCount ? parseInt(storedIbisakuzoViewCount) : 0);
+        setIsomeroViewCount(storedIsomeroViewCount ? parseInt(storedIsomeroViewCount) : 0);
+        setImiganiViewCount(storedImiganiViewCount ? parseInt(storedImiganiViewCount) : 0); 
+    }, []);
+
+    return (
+        <div className="report-container">
+            <div className="card-row">
+
+                <div className="card">
+                    <CircleBar percentage={(imiganiViewCount / 100) * 100} />
+                    <p className="view-count">Imigani migufi has been viewed {imiganiViewCount} times.</p>
+                </div>
+                <div className="card">
+                    <CircleBar percentage={(ikenshavugoViewCount / 100) * 100} />
+                    <p className="view-count">Ikenshamvugo has been viewed {ikenshavugoViewCount} times.</p>
+                </div>
+                <div className="card">
+                    <CircleBar percentage={(incamarengaViewCount / 100) * 100} />
+                    <p className="view-count">Incamarenga has been viewed {incamarengaViewCount} times.</p>
+                </div>
+            </div>
+
+            <div className="card-row">
+                <div className="card">
+                    <CircleBar percentage={(ibisakuzoViewCount / 100) * 100} />
+                    <p className="view-count">Ibisakuzo has been viewed {ibisakuzoViewCount} times.</p>
+                </div>
+                <div className="card">
+                    <CircleBar percentage={(isomeroViewCount / 100) * 100} />
+                    <p className="view-count">Isomero has been viewed {isomeroViewCount} times.</p>
+                </div>
+            </div>
+
+        </div>
+    );
 }

@@ -5,9 +5,15 @@ const QuestionPage = () => {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [currentSlide, setCurrentSlide] = useState(0);
   const [submittedAnswers, setSubmittedAnswers] = useState({});
+  const [viewCount, setViewCount] = useState(0);
 
   useEffect(() => {
     fetchQuestions();
+
+    const storedViewCount = localStorage.getItem('ibisakuzoViewCount'); 
+        const updatedViewCount = storedViewCount ? parseInt(storedViewCount) + 1 : 1;
+        setViewCount(updatedViewCount);
+        localStorage.setItem('ibisakuzoViewCount', updatedViewCount.toString());
   }, []);
 
   const fetchQuestions = async () => {

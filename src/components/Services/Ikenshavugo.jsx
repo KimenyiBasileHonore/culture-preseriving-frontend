@@ -8,6 +8,7 @@ import Ikenshavugokunka from "./Ikenshavugokunka";
 import Ikenshicyansi from "./Ikenshicyansi";
 import Ikeshantunibintu from "./Ikeshantunibintu";
 import axios from "axios";
+import './Imigani.css';
 
 
 function Ikenshavugo() {
@@ -15,6 +16,7 @@ function Ikenshavugo() {
     const [flips, setFlips] = useState([false, false, false, false]);
     const [currentFlipIndex, setCurrentFlipIndex] = useState(-1);
     const [ikenshavugoList, setIkenshavugoList] = useState([]);
+    const [viewCount, setViewCount] = useState(0);
 
     const toggleCollapsible = () => {
         setIsOpen(!isOpen);
@@ -42,7 +44,13 @@ function Ikenshavugo() {
             }
         };
 
+        
         fetchIkenshavugoData();
+
+        const storedViewCount = localStorage.getItem('ikenshavugoViewCount'); // Use a unique key for Ikenshamvugo
+        const updatedViewCount = storedViewCount ? parseInt(storedViewCount) + 1 : 1;
+        setViewCount(updatedViewCount);
+        localStorage.setItem('ikenshavugoViewCount', updatedViewCount.toString()); // Use the same unique key here
     }, []);
     return (
         <div>
